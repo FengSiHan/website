@@ -9,12 +9,12 @@ class AcHeader extends React.Component
   constructor(props)
   {
     super(props);
-    this.state = {logined:"yes"};
+    this.state = {logined:false};
   }
 
   getRemainComponent()
   {
-    if (this.state.logined === "yes") 
+    if (this.state.logined === false) 
     {
       return (
         <Col xs={10} sm={5} md={5} lg={3} xl={3} offset={2}>
@@ -48,7 +48,7 @@ class AcHeader extends React.Component
               </div>
             </Col>
             <AcDrawer/>
-            <AcSearch/>
+            <AcSearch homePage={ this.state.homePage }/>
             {this.getRemainComponent()}
           </Row>
         </div>

@@ -10,7 +10,7 @@ class HomePage extends React.Component
     {
         return (
             <Layout className="layout">
-                <AcHeader/>
+                <AcHeader homePage/>
                 <Content className="content">
                     <div className="container">
                         
