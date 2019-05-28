@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout } from 'antd';
 
-import AcHeader from './acHeader'
+import AcHeader from './controls/acHeader'
 
 const { Content, Footer } = Layout;
 
@@ -10,7 +10,7 @@ function App()
   return (
     <Layout className="layout">
       <AcHeader/>
-      <Content style={{ padding: '0 50px'}}>
+      <Content style={{ padding: '0 50px', height: 100%}}>
         <div style={{ background:'#fff', padding: 24, minHeight:280}}>Content</div>
       </Content>
       <Footer style={{textAlign: "center"}}>

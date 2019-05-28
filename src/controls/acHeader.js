@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './logo.png'
-import { Row, Col, Button, Layout, Avatar} from 'antd';
+import logo from '../logo.png'
+import { Row, Col, Button, Layout, Avatar, message} from 'antd';
 import AcSearch from './acSearch'
 import AcDrawer from './acDrawer'
 const { Header } = Layout
@@ -11,6 +11,7 @@ class AcHeader extends React.Component
     super(props);
     this.state = {logined:"yes"};
   }
+
   getRemainComponent()
   {
     if (this.state.logined === "yes") 
@@ -18,7 +19,9 @@ class AcHeader extends React.Component
       return (
         <Col xs={10} sm={5} md={5} lg={3} xl={3} offset={2}>
           <b><font color='0xfff'>Welcome!</font></b>
-          <Avatar src={logo}></Avatar>
+          <span onClick={()=>{message.info("进入个人主页")}}>
+            <Avatar src={logo}/>
+          </span>
         </Col>
       );
     }

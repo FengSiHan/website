@@ -1,0 +1,29 @@
+.container 
+{
+    text-align: center;
+    /* background-image: url(../logo.png); */
+    background: transparent; 
+    height: 100%;
+    /* margin: 0% 5% 0% 5%; */
+    background-size: cover;
+    /* position: absolute; */
+    top: 0px;
+    bottom: 0px;
+}
+.content
+{
+    background:transparent; 
+    height: 100%;
+    width: 90%;
+    margin: 0% 5% 0% 5%;
+    background-size: cover;
+    top: 0px;
+    bottom: 0px;
+    padding: 0px 40px 0px 40px;
+}
+.layout
+{
+    height:100%;
+    width: 100%;
+    position: absolute;
+}
