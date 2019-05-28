@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router , Route} from 'react-router-dom';
+
 import HomePage from './pages/home'
+import RegisterPage from './pages/register'
+import LoginPage from './pages/login'
+
 ReactDOM.render(
     <Router>
         <div>
+            {/* <IndexRoute component={HomePage}/> */}
             <Route exact path="/" component={HomePage}/>
+            <Route path="/register" component={RegisterPage}/>
+            <Route path="/login" component={LoginPage}/>
         </div>
     </Router>,
     document.getElementById('root'));

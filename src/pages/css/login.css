@@ -1,0 +1,36 @@
+.login-layout
+{
+    min-height: 500px;
+    height:100%;
+    width: 100%;
+    position: absolute;
+    background: #fff;
+    text-align: center;
+}
+.login-content
+{
+    width: 80%;
+    margin: 10% 10% 10% 10%;
+    text-align: center;
+    padding: 0 10% 0 10%;
+}
+.login-form
+{
+    width: 80%;
+    margin: 0 auto 0 auto;
+    max-width: 500px;
+    min-width: 200px;
+    text-align: center;
+}
+.login-form-button
+{
+    width: 100%;
+}
+.login-form-forgot 
+{
+    float: right;
+}
+.login-form-checkbox
+{
+    float: left;
+}
