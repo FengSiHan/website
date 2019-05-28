@@ -11,7 +11,10 @@ function App()
     <Layout className="layout">
       <AcHeader/>
       <Content style={{ padding: '0 50px', height: 100%}}>
-        <div style={{ background:'#fff', padding: 24, minHeight:280}}>Content</div>
+        <div style={{ background:'#fff', padding: 24, minHeight:280}}>
+          asdadContent
+        asdad  
+        </div>
       </Content>
       <Footer style={{textAlign: "center"}}>
           ssad group @2019 Created by front-end
