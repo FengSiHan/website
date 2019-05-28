@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.png'
-import { Row, Col, Button, Layout} from 'antd';
+import { Row, Col, Button, Layout, Avatar} from 'antd';
 import AcSearch from './acSearch'
 import AcDrawer from './acDrawer'
 const { Header } = Layout
@@ -13,11 +13,12 @@ class AcHeader extends React.Component
   }
   getRemainComponent()
   {
-    if (this.state.logined === "no") 
+    if (this.state.logined === "yes") 
     {
       return (
-        <Col sm={2} md={2} lg={3} xl={3}>
+        <Col xs={10} sm={5} md={5} lg={3} xl={3} offset={2}>
           <b><font color='0xfff'>Welcome!</font></b>
+          <Avatar src={logo}></Avatar>
         </Col>
       );
     }
@@ -37,7 +38,7 @@ class AcHeader extends React.Component
       <Header className="header">       
         <div>
           <Row>
-            <Col xl={3} xxs={16} xs={18} sm={18} md={3} lg={3}>
+            <Col xl={3} xxs={12} xs={10} sm={12} md={3} lg={3}>
               <div className="logo" style={{verticalAlign:true, lineHeight: '64px'}}>
                 <img src={logo} alt="logo" style={{height:'30px', weight:'30px'}}/>
                 <b><font color='#fff'>云学术</font></b>
