@@ -9,7 +9,7 @@ class AcHeader extends React.Component
   constructor(props)
   {
     super(props);
-    this.state = {logined:false};
+    this.state = {logined:false, homePage:this.props.homePage};
   }
 
   getRemainComponent()
@@ -17,10 +17,10 @@ class AcHeader extends React.Component
     if (this.state.logined === false) 
     {
       return (
-        <Col xs={10} sm={5} md={5} lg={3} xl={3} offset={2}>
-          <b><font color='0xfff'>Welcome!</font></b>
+        <Col xs={11} sm={6} md={5} lg={4} xl={3} offset={2}>
+          <b style={{margin: "0px 10px 0px 10px"}}><font color='#fff'>Welcome!</font></b>
           <span onClick={()=>{message.info("进入个人主页")}}>
-            <Avatar src={logo}/>
+            <Avatar />
           </span>
         </Col>
       );
@@ -44,7 +44,7 @@ class AcHeader extends React.Component
             <Col xl={3} xxs={12} xs={10} sm={12} md={3} lg={3}>
               <div className="logo" style={{verticalAlign:true, lineHeight: '64px'}}>
                 <img src={logo} alt="logo" style={{height:'30px', weight:'30px'}}/>
-                <b><font color='#fff'>云学术</font></b>
+                <b><font color='white'>云学术</font></b>
               </div>
             </Col>
             <AcDrawer/>

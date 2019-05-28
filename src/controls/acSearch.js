@@ -20,7 +20,7 @@ class AcSearch extends React.Component
               <Menu.Item key="3">论文</Menu.Item>
             </Menu> 
           </Col>
-          <Col xl={8} lg={9} md={7} sm={0} xs={0}>
+          <Col xl={11} lg={9} md={7} sm={0} xs={0}>
               <Search 
                 placeholder="input search text"
                 enterButton="Search"
@@ -32,8 +32,11 @@ class AcSearch extends React.Component
           </Col>
         </div>
     :<div>
-      <Col xl={5} lg={6} md={7} sm={0} xs={0}/>
-      <Col xl={8} lg={9} md={7} sm={0} xs={0}/>
+      <Col xl={16} lg={15} md={14} sm={0} xs={0}>
+        <div style={{textAlign: "center"}}>
+          <b><font color='white'>&nbsp;&nbsp;&nbsp;Welcome to the Academic Cloud~</font></b>
+        </div>
+      </Col>
     </div>
     );
   }

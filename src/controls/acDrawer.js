@@ -18,7 +18,7 @@ class AcDrawer extends React.Component
   render()
   {
     return (
-      <Col xl={0} lg={0} md={0} sm={4} xs={2}>
+      <Col xl={0} lg={0} md={0} sm={4} xs={1}>
         <Button type="primary" shape="circle" onClick={this.showDrawer}>
           <Icon type="unordered-list"/>
         </Button>

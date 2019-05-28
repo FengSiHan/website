@@ -10,7 +10,7 @@ function App()
   return (
     <Layout className="layout">
       <AcHeader/>
-      <Content style={{ padding: '0 50px', height: 100%}}>
+      <Content style={{ padding: '0 50px'}}>
         <div style={{ background:'#fff', padding: 24, minHeight:280}}>
           asdadContent
         asdad  
