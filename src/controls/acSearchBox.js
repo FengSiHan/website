@@ -4,11 +4,11 @@ import { Input,Radio } from 'antd'
 const Search=Input.Search
 //type代表搜索类型：专家、机构、论文（成果）
 //handleSearch 响应搜索
-//width 宽度
+//class 样式名
 class AcSearchBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state={type:0,handleSearch:props.handleSearch,width:props.width,value:""}
+    this.state={type:0,handleSearch:props.handleSearch,class:props.class,value:""}
   }
 
   handleTypeChange= e=>{
@@ -18,7 +18,7 @@ class AcSearchBox extends React.Component {
     var typelist=["专家","机构","论文"];//
     const {type} =this.state.type;
     return  <div>
-                <div style={{textAlign:"left"}}>
+                <div style={{textAlign:"left"}} class={this.state.class}>
                  <Radio.Group value={type} onChange={this.handleTypeChange} >
                  <Radio.Button value={0}>专家</Radio.Button>
                  <Radio.Button value={1}>机构</Radio.Button>
