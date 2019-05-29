@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from 'antd';
+import { Layout, message } from 'antd';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
 import './css/register.css'
@@ -15,18 +15,25 @@ const { Content } = Layout;
 
 
 class RegisterPageClass extends React.Component {
-  state = {
-    confirmDirty: false,
-    autoCompleteResult: [],
-  };
-
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      confirmDirty: false,
+      autoCompleteResult: []
+    };
+  }
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        message.info("注册成功");
+        this.state.logined = true;
+        this.props.history.push({pathname:'/',state: this.state});
       }
     });
+
   };
 
   handleConfirmBlur = e => {
@@ -81,8 +88,8 @@ class RegisterPageClass extends React.Component {
 
     return (
       <Layout className="reg-layout">
-        <AcHeader logined={false} />
-        <Content className="reg-ontent">
+        <AcHeader logined={false} homePage={false}/>
+        <Content className="reg-content">
           <div className="reg-div-form">
             <Form {...formItemLayout} className="reg-form" onSubmit={this.handleSubmit}>
               <Form.Item label="Username">

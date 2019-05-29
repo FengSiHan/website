@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from 'antd';
+import { Layout, message } from 'antd';
 import  AcHeader  from '../controls/acHeader'
 import  AcFooter  from '../controls/acFooter'
 import './css/login.css'
@@ -9,11 +9,21 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const { Content } = Layout;
 class LoginPageClass extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            logined: false
+        };
+    }
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
             console.log('Received values of form: ', values);
+            message.info("登陆成功");
+            this.state.logined = true;
+            this.props.history.push({pathname:'/',state: this.state});
             }
         });
     };

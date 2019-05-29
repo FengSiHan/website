@@ -32,10 +32,10 @@ class AcHeader extends React.Component
     {
       return (
         <Col xl={4} lg={4} md={6} sm={0} xs={0} offset={1}>
-            <Link to={{pathname: '/register', state: {lastUrl: this.props.location?this.props.location.pathname:'/'}}}>
+            <Link to={{pathname: '/register', state: {lastUrl: this.props.location?this.props.location.pathname:'/', logined: this.state.logined}}}>
               <Button type="primary" shape="round">注册</Button>
             </Link>
-            <Link to={{pathname: '/login', state: {lastUrl: this.props.location?this.props.location.pathname:'/'}}}>
+            <Link to={{pathname: '/login', state: {lastUrl: this.props.location?this.props.location.pathname:'/', logined: this.state.logined}}}>
               <Button type="primary" shape="round">登陆</Button>
             </Link>
         </Col>
