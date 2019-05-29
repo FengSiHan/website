@@ -66,7 +66,7 @@ class AcDrawer extends React.Component
               onSearch={value => message.info(value + "  invalid")}
               style={{ lineHeight: '64px', border:'', verticalAlign:'middle'}}
             /> */}
-            <AcSearchBox/>
+            <AcSearchBox type={0/*type应被传入页面，指示搜索类型*/}/>   
         </Drawer>
       </Col>
     );

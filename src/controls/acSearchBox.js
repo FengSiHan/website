@@ -8,7 +8,7 @@ const Search=Input.Search
 class AcSearchBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state={type:0,handleSearch:props.handleSearch,class:props.class,value:""}
+    this.state={type:this.props.type,handleSearch:props.handleSearch,class:props.class,value:""}
   }
 
   handleTypeChange= e=>{
@@ -18,8 +18,8 @@ class AcSearchBox extends React.Component {
     var typelist=["专家","机构","论文"];//
     const {type} =this.state.type;
     return  <div>
-                <div style={{textAlign:"left"}} class={this.state.class}>
-                 <Radio.Group value={type} onChange={this.handleTypeChange} >
+                <div style={{textAlign:"left"}} >
+                 <Radio.Group defaultvalue={type} onChange={this.handleTypeChange} buttonStyle="solid">
                  <Radio.Button value={0}>专家</Radio.Button>
                  <Radio.Button value={1}>机构</Radio.Button>
                  <Radio.Button value={2}>论文</Radio.Button>

@@ -37,7 +37,7 @@ class HomePage extends React.Component
                             <img src={logo} style={{height: "100px", width: "147px"}} alt="logo"/>
                             <span><h1>Academic Cloud</h1></span>
                         </div>
-                        <AcSearchBox />
+                        <AcSearchBox type={0}/>
                     </div>
                 </Content>
                 <AcFooter/>
