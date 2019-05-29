@@ -9,7 +9,10 @@
 }
 .personal-content
 {
-    width: 80%;
     margin: 10px auto 10px auto;
+    text-align: center;
+}
+.personal-outer-div
+{
     text-align: center;
 }

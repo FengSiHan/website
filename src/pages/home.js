@@ -13,29 +13,20 @@ class HomePage extends React.Component
     constructor(props)
     {
         super(props);
-        var paras = this.props.location.state;
-        
-        var result = !(!paras) && paras.hasOwnProperty("logined");
-
-        var logined = false;
-
-        if (result === true)
-        {
-            logined = paras.logined;
+        try {
+            this.state = {logined: this.props.location.state.logined};
+        } catch (error) {
+            this.state = {logined: false};
         }
-        
-        this.state = {logined: logined};
     }
     tryConnect = () =>
     {
-        let formData = new FormData();
-        formData.append("key", "123456");
-        formData.append("secret_key", "123456");
-        formData.append("telephone", "12345678900");
-        
-        fetch('http://94.191.58.148/ssad/test/',{
+        var json=[];
+        var row = {key:'2', secret_key: '3', telephone: 'yes'};
+        json.push(row);
+        fetch('http://94.191.58.148/test.php',{
             method: 'POST',
-            body: formData,
+            body: row,
             dataType: "text"
         }).then(
             function (response)
@@ -45,8 +36,8 @@ class HomePage extends React.Component
                     message.info('return status error '+ response.status);
                     return;
                 }
-                response.json().then(function (data){
-                    message.info(data);
+                response.text().then(function (data){
+                    console.log(data);
                 })
             }
         ).catch(function(err){

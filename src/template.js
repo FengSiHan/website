@@ -14,14 +14,11 @@ class Template extends React.Component {
   { 
     super(props);
 
-    var paras = this.props.location.state;
-    var result = !(!paras) && paras.hasOwnProperty("logined");
-    var logined = false;
-    if (result === true)
-    {
-        logined = paras.logined;
+    try {
+      this.state = {logined: this.props.location.state.logined};
+    } catch (error) {
+        this.state = {logined: false};
     }
-    this.state = {logined: logined};
     
     /*
       初始化其他部分
@@ -35,6 +32,13 @@ class Template extends React.Component {
         <Content className="temp-content">
           {/*
               页面控件放置的地方
+
+
+
+              以下是跳转的标准写法
+              <Link to={{pathname: '/？？？', state: {lastUrl: this.props.location.pathname, logined: this.state.logined }}}>   
+                <其他控件>
+              </Link>
           */}
         </Content>
         <AcFooter />

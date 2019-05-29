@@ -14,10 +14,12 @@ class LoginPageClass extends React.Component
     constructor(props)
     {
         super(props);
-        this.state = {
-            logined: false
-        };
-        this.state = {lastUrl: this.props.location.state.hasOwnProperty("lastUrl")?this.props.location.state.lastUrl:'/'};
+        
+        try {
+            this.state = {lastUrl: this.props.location.state.lastUrl};
+        } catch (error) {
+            this.state = {lastUrl: '/'}
+        }
         if (this.state.lastUrl === '/register')
         {
             this.state.lastUrl = '/';

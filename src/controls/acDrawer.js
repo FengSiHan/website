@@ -41,9 +41,9 @@ class AcDrawer extends React.Component
             {this.state.logined ? 
             <div>
               <b style={{margin: "0px 10px 0px 10px"}}><font color='black'>Welcome!</font></b>
-              <span onClick={()=>{message.info("进入个人主页")}}>
+              <Link to={{pathname: '/personal', state: {lastUrl: this.props.location.pathname, logined: this.state.logined }}}>   
                 <Avatar />
-              </span>
+              </Link>
             </div>
             :<div>
               <Link to={{pathname: '/register', state: {lastUrl: this.props.location.pathname }}}>

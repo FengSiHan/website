@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Layout, Avatar, message} from 'antd';
+import { Row, Col, Button, Layout, Avatar } from 'antd';
 import { Link, withRouter } from 'react-router-dom'
 
 import AcSearch from './acSearch'
@@ -22,9 +22,9 @@ class AcHeader extends React.Component
       return (
         <Col xs={0} sm={0} md={5} lg={4} xl={3} offset={2}>
           <b style={{margin: "0px 10px 0px 10px"}}><font color='#fff'>Welcome!</font></b>
-          <span onClick={()=>{message.info("进入个人主页")}}>
+          <Link to={{pathname: '/personal', state: {lastUrl: this.props.location.pathname, logined: this.state.logined }}}>
             <Avatar />
-          </span>
+          </Link>
         </Col>
       );
     }
