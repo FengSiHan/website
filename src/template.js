@@ -1,20 +1,13 @@
 import React from 'react'
-import { Layout, message } from 'antd';
+import { Layout } from 'antd';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
 import './css/register.css'
 
-import {
-  Form, 
-  Input,
-  Checkbox,
-  Button,
-} from 'antd';
-
 const { Content } = Layout;
 
 
-class RegisterPageClass extends React.Component {
+class Template extends React.Component {
   constructor(props)
   { 
     super(props);
@@ -27,6 +20,10 @@ class RegisterPageClass extends React.Component {
         logined = paras.logined;
     }
     this.state = {logined: logined};
+    
+    /*
+      初始化其他部分
+    */
   }
 
   render() {
@@ -34,7 +31,9 @@ class RegisterPageClass extends React.Component {
       <Layout className="temp-layout">
         <AcHeader logined={this.state.logined} homePage={false}/>
         <Content className="temp-content">
-         
+          {/*
+              页面控件放置的地方
+          */}
         </Content>
         <AcFooter />
       </Layout>
@@ -42,4 +41,4 @@ class RegisterPageClass extends React.Component {
   }
 }
 
-export default XXXX;
+export default Template;
