@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Button, Layout, Avatar, message} from 'antd';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import AcSearch from './acSearch'
 import AcDrawer from './acDrawer'
@@ -32,10 +32,10 @@ class AcHeader extends React.Component
     {
       return (
         <Col xl={4} lg={4} md={6} sm={0} xs={0} offset={1}>
-            <Link to={{pathname: '/register', state: {lastUrl: this.props.location?this.props.location.pathname:'/', logined: this.state.logined}}}>
+            <Link to={{pathname: '/register', state: {lastUrl: this.props.location.pathname }}}>
               <Button type="primary" shape="round">注册</Button>
             </Link>
-            <Link to={{pathname: '/login', state: {lastUrl: this.props.location?this.props.location.pathname:'/', logined: this.state.logined}}}>
+            <Link to={{pathname: '/login', state: {lastUrl: this.props.location.pathname}}}>
               <Button type="primary" shape="round">登陆</Button>
             </Link>
         </Col>
@@ -65,4 +65,4 @@ class AcHeader extends React.Component
     );
   }
 }
-export default AcHeader;
+export default withRouter(AcHeader);

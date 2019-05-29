@@ -2,6 +2,7 @@ import React from 'react'
 import { Layout, message } from 'antd';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
+import { withRouter } from 'react-router-dom';
 import './css/register.css'
 
 import {
@@ -15,6 +16,7 @@ const { Content } = Layout;
 
 
 class RegisterPageClass extends React.Component {
+  
   constructor(props)
   {
     super(props);
@@ -22,18 +24,24 @@ class RegisterPageClass extends React.Component {
       confirmDirty: false,
       autoCompleteResult: []
     };
+    this.state = {lastUrl: this.props.location.state.hasOwnProperty("lastUrl")?this.props.location.state.lastUrl:'/'};
+    if (this.state.lastUrl === '/login')
+    {
+        this.state.lastUrl = '/';
+    }
   }
-  handleSubmit = e => {
+  chandleSubmit = (e) =>
+  {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
         message.info("注册成功");
         this.state.logined = true;
-        this.props.history.push({pathname:'/',state: this.state});
+        console.log(this.state.lastUrl);
+        this.props.history.push({pathname: this.state.lastUrl, state: this.state});
       }
     });
-
   };
 
   handleConfirmBlur = e => {
@@ -133,7 +141,7 @@ class RegisterPageClass extends React.Component {
                   valuePropName: 'checked',
                 })(
                   <Checkbox>
-                    I have read the <a href="">agreement</a>
+                    I have read the <a href="/agreement">agreement</a>
                   </Checkbox>,
                 )}
               </Form.Item>
@@ -153,4 +161,4 @@ class RegisterPageClass extends React.Component {
 
 const RegisterPage = Form.create({ name: 'register' })(RegisterPageClass);
 
-export default RegisterPage;
+export default withRouter(RegisterPage);

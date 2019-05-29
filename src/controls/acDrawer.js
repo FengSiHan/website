@@ -1,9 +1,10 @@
 import React from 'react'
-import { Menu, Col, message, Input, Button, Icon, Divider, Drawer, Avatar } from 'antd';
+import { Col, message, Button, Icon, Divider, Drawer, Avatar } from 'antd';
 import { Link } from 'react-router-dom'
 import AcSearchBox from './acSearchBox'
+import { withRouter } from 'react-router-dom';
 
-const Search = Input.Search;
+
 class AcDrawer extends React.Component
 {
   state = { visible : false }
@@ -45,31 +46,19 @@ class AcDrawer extends React.Component
               </span>
             </div>
             :<div>
-              <Link to={{pathname: '/register', state: {lastUrl: this.props.location?this.props.location.pathname:'/'}}}>
+              <Link to={{pathname: '/register', state: {lastUrl: this.props.location.pathname }}}>
                 <Button type="primary" shape="round">注册</Button>
               </Link>
-              <Link to={{pathname: '/login', state: {lastUrl: this.props.location?this.props.location.pathname:'/'}}}>
+              <Link to={{pathname: '/login', state: {lastUrl: this.props.location.pathname}}}>
                 <Button type="primary" shape="round">登陆</Button>
               </Link>
             </div>}
           </div>
           <Divider/>
-            {/* <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} style={{ lineHeight: '20px', border:''}}>
-            <Menu.Item key="1">专家</Menu.Item>
-            <Menu.Item key="2">机构</Menu.Item>
-            <Menu.Item key="3">论文</Menu.Item>
-            </Menu> 
-            <Search 
-              placeholder="input search text"
-              enterButton="Search"
-              size="large"
-              onSearch={value => message.info(value + "  invalid")}
-              style={{ lineHeight: '64px', border:'', verticalAlign:'middle'}}
-            /> */}
             <AcSearchBox type={0/*type应被传入页面，指示搜索类型*/}/>   
         </Drawer>
       </Col>
     );
   }
 }
-export default AcDrawer;
+export default withRouter(AcDrawer);

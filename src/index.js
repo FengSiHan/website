@@ -7,6 +7,7 @@ import {BrowserRouter as Router , Route} from 'react-router-dom';
 import HomePage from './pages/home'
 import RegisterPage from './pages/register'
 import LoginPage from './pages/login'
+import PersonalPage from './pages/personal'
 
 ReactDOM.render(
     <Router>
@@ -15,6 +16,7 @@ ReactDOM.render(
             <Route exact path="/" component={HomePage}/>
             <Route path="/register" component={RegisterPage}/>
             <Route path="/login" component={LoginPage}/>
+            <Route path="/personal" component={PersonalPage}/>
         </div>
     </Router>,
     document.getElementById('root'));

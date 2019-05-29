@@ -1,10 +1,11 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Button, message } from 'antd';
 import  AcHeader  from '../controls/acHeader'
 import  AcFooter  from '../controls/acFooter'
 import  AcSearchBox from '../controls/acSearchBox'
 import logo from '../logo.png'
 import './css/home.css'
+import { withRouter } from 'react-router-dom';
 
 const { Content } = Layout;
 class HomePage extends React.Component
@@ -25,7 +26,33 @@ class HomePage extends React.Component
         
         this.state = {logined: logined};
     }
-
+    tryConnect = () =>
+    {
+        let formData = new FormData();
+        formData.append("key", "123456");
+        formData.append("secret_key", "123456");
+        formData.append("telephone", "12345678900");
+        
+        fetch('http://94.191.58.148/ssad/test/',{
+            method: 'POST',
+            body: formData,
+            dataType: "text"
+        }).then(
+            function (response)
+            {
+                if (response.status !== 200)
+                {
+                    message.info('return status error '+ response.status);
+                    return;
+                }
+                response.json().then(function (data){
+                    message.info(data);
+                })
+            }
+        ).catch(function(err){
+            message.info('Fetch error: '+err);
+        });
+    }
     render()
     {
         return (
@@ -38,6 +65,9 @@ class HomePage extends React.Component
                             <span><h1>Academic Cloud</h1></span>
                         </div>
                         <AcSearchBox type={0}/>
+                        <Button type="primary" onClick={this.tryConnect}>
+                            Test connect
+                        </Button>
                     </div>
                 </Content>
                 <AcFooter/>
@@ -46,4 +76,4 @@ class HomePage extends React.Component
     }
 }
 
-export default HomePage;
+export default withRouter(HomePage);

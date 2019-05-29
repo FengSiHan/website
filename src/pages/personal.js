@@ -3,13 +3,12 @@ import { Layout } from 'antd';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
 import { withRouter } from 'react-router-dom';
-
-import './css/register.css'
+import './css/personal.css'
 
 const { Content } = Layout;
 
 
-class Template extends React.Component {
+class PersonalPage extends React.Component {
   constructor(props)
   { 
     super(props);
@@ -43,4 +42,4 @@ class Template extends React.Component {
   }
 }
 
-export default withRouter(Template);
+export default withRouter(PersonalPage);

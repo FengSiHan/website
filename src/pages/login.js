@@ -2,6 +2,8 @@ import React from 'react'
 import { Layout, message } from 'antd';
 import  AcHeader  from '../controls/acHeader'
 import  AcFooter  from '../controls/acFooter'
+import { withRouter } from 'react-router-dom';
+
 import './css/login.css'
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
@@ -15,15 +17,24 @@ class LoginPageClass extends React.Component
         this.state = {
             logined: false
         };
+        this.state = {lastUrl: this.props.location.state.hasOwnProperty("lastUrl")?this.props.location.state.lastUrl:'/'};
+        if (this.state.lastUrl === '/register')
+        {
+            this.state.lastUrl = '/';
+        }
     }
-    handleSubmit = e => {
+
+    handleSubmit = (e) => 
+    {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
             console.log('Received values of form: ', values);
             message.info("登陆成功");
+            // this.setState({logined : true});
             this.state.logined = true;
-            this.props.history.push({pathname:'/',state: this.state});
+            //console.log(this.state.logined);
+            this.props.history.push({pathname:this.state.lastUrl, state: this.state});
             }
         });
     };
@@ -63,13 +74,13 @@ class LoginPageClass extends React.Component
                                 valuePropName: 'checked',
                                 initialValue: true,
                             })(<Checkbox className="login-form-checkbox">Remember me</Checkbox>)}
-                            <a className="login-form-forgot" href="">
+                            <a className="login-form-forgot" href="/forgetpd">
                                 Forgot password
                             </a>
                             <Button type="primary" htmlType="submit" className="login-form-button">
                                 Log in
                             </Button>
-                            <a href="" style={{float:"left"}}>Or register now!</a>
+                            <a href="/register" style={{float:"left"}}>Or register now!</a>
                             </Form.Item>
                         </Form>
                     </div>
@@ -80,4 +91,4 @@ class LoginPageClass extends React.Component
     }
 }
 const LoginPage = Form.create({ name: 'Login' })(LoginPageClass);
-export default LoginPage;
+export default withRouter(LoginPage);
