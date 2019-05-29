@@ -4,7 +4,7 @@ import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
 import { withRouter } from 'react-router-dom';
 
-import './css/register.css'
+import './css/template.css'
 
 const { Content } = Layout;
 
