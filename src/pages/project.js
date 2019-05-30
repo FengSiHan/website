@@ -17,13 +17,12 @@ class Template extends React.Component {
     try {
       this.state = this.props.location.state;
     } catch (error) {
-      this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
+        this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
     if (this.state === undefined )
     {
         this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
-
     /*
       初始化其他部分
     */

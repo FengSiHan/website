@@ -9,6 +9,7 @@ class AcSearchBox extends React.Component {
   constructor(props) {
     super(props);
     this.state={type:this.props.type,value:""}
+    this.state.loginInfo=this.props.loginInfo;
     this.handleSearch=this.handleSearch.bind(this);
   }
 
@@ -18,7 +19,9 @@ class AcSearchBox extends React.Component {
 
   handleSearch(value)
   {
-    this.props.history.push({pathname:'/searchResult', state:{value: value,type:this.state.type}});
+    var newstate = this.state;
+    newstate.value = value;
+    this.props.history.push({pathname:'/searchResult', state:newstate});
   }
   render(){
     var typelist=["专家","机构","论文"];//

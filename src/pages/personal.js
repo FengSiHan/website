@@ -152,11 +152,15 @@ class PersonalPageClass extends React.Component
     }
 
     try {
-      this.state = {loginInfo: this.props.location.state.loginInfo};
+      this.state = this.props.location.state;
     } catch (error) {
         this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
-
+    if (this.state === undefined )
+    {
+        this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
+    }
+    
     try {
       this.state.isExpert = this.props.location.state.isExpert;
     } catch (error) {
@@ -164,6 +168,7 @@ class PersonalPageClass extends React.Component
     }
     this.state.changePdVisible = false;
     this.state.expertApplyVisible = false;
+    console.log(this.state.loginInfo);
   }
 
   handleSubmit = e => {
@@ -173,7 +178,6 @@ class PersonalPageClass extends React.Component
         console.log('Received values of change passward form: ', values);
       }
     });
-
   };
 
   validateToNextPassword = (rule, value, callback) => {
@@ -352,17 +356,17 @@ class PersonalPageClass extends React.Component
               </Button>
             </div>
             <div style={{margin: '20px'}}>
-              <Button type="primary" disabled={!this.state.isExpert} onClick={()=>this.props.history.push({pathname:'/project', state: this.state})}>
+              <Button type="primary" disabled={!this.state.loginInfo.isExpert} onClick={()=>this.props.history.push({pathname:'/project', state: this.state})}>
                 管理项目
               </Button>
             </div>
             <div style={{margin: '20px'}}>
-              <Button type="primary" disabled={!this.state.isExpert} onClick={()=>this.props.history.push({pathname:'/thesis', state: this.state})}>
+              <Button type="primary" disabled={!this.state.loginInfo.isExpert} onClick={()=>this.props.history.push({pathname:'/thesis', state: this.state})}>
                 管理论文
               </Button>
             </div>
             <div style={{margin: '20px'}}>
-              <Button type="primary" disabled={!this.state.isExpert} onClick={()=>this.props.history.push({pathname:'/patent', state: this.state})}>
+              <Button type="primary" disabled={!this.state.loginInfo.isExpert} onClick={()=>this.props.history.push({pathname:'/patent', state: this.state})}>
                 管理专利
               </Button>
             </div>

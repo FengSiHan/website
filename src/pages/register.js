@@ -27,11 +27,15 @@ class RegisterPageClass extends React.Component {
     };
     
     try {
-      this.state = {lastUrl: this.props.location.state.lastUrl};
+      this.state = this.props.location.state;
     } catch (error) {
       this.state = {lastUrl: '/'}
     }
-    if (this.state.lastUrl === '/login')
+    if (this.state === undefined )
+    {
+        this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
+    }
+    else if (this.state.lastUrl === '/login')
     {
         this.state.lastUrl = '/';
     }

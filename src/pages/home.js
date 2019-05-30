@@ -14,8 +14,12 @@ class HomePage extends React.Component
     {
         super(props);
         try {
-            this.state = {loginInfo: this.props.location.state.loginInfo};
+            this.state = this.props.location.state;
         } catch (error) {
+            this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
+        }
+        if (this.state === undefined )
+        {
             this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
         }
     }
@@ -55,7 +59,7 @@ class HomePage extends React.Component
                             <img src={logo} style={{height: "100px", width: "147px"}} alt="logo"/>
                             <span><h1>Academic Cloud</h1></span>
                         </div>
-                        <AcSearchBox type={0}/>
+                        <AcSearchBox type={0} loginInfo={this.state.loginInfo}/>
                     </div>
                 </Content>
                 <AcFooter/>

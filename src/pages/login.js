@@ -16,15 +16,19 @@ class LoginPageClass extends React.Component
         super(props);
         
         try {
-            this.state = {lastUrl: this.props.location.state.lastUrl};
+            this.state = this.props.location.state;
         } catch (error) {
             this.state = {lastUrl: '/'}
         }
-        if (this.state.lastUrl === '/register')
+        if (this.state === undefined )
+        {
+            this.state = {lastUrl: '/'}
+        }
+        else if (this.state.lastUrl === '/register')
         {
             this.state.lastUrl = '/';
         }
-        this.state.loginInfo = {isExpert: false, logined: false, un:''}
+        this.state.loginInfo = {isExpert: false, logined: false, un:''};
     }
 
     handleSubmit = (e) => 
@@ -48,7 +52,7 @@ class LoginPageClass extends React.Component
         const { getFieldDecorator } = this.props.form;
         return (
             <Layout className="login-layout">
-                <AcHeader loginInfo={this.state.loginInfo}/>
+                <AcHeader loginInfo={this.state.loginInfo} homePage={false}/>
                 <Content className="login-content">
                     <div className="login-form">
                         <Form onSubmit={this.handleSubmit}>
