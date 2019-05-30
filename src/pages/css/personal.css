@@ -9,21 +9,22 @@
 }
 .personal-content
 {
-    margin: 10px auto 10px auto;
+    margin: 10px auto 0 auto;
+    height: 100%;
 }
-.personal-outer-div
+.personal-left-div
 {
     text-align: center;
     margin: 15% 15% 0 0;
-    height: 100%;
+    height: 85%;
     width: 65%;
     float: left;
 }
 .personal-right-div
 {
     float: right;
-    height: 100%;
-    margin: 20% auto 30% auto;
+    height: 85%;
+    margin: 20% auto 0% auto;
     width: 20%;
     vertical-align: middle
 }
