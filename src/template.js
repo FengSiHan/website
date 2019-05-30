@@ -15,9 +15,9 @@ class Template extends React.Component {
     super(props);
 
     try {
-      this.state = {logined: this.props.location.state.logined};
+      this.state = {loginInfo: this.props.location.state.loginInfo};
     } catch (error) {
-        this.state = {logined: false};
+        this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
     
     /*
@@ -28,7 +28,7 @@ class Template extends React.Component {
   render() {
     return (
       <Layout className="temp-layout">
-        <AcHeader logined={this.state.logined} homePage={false}/>
+        <AcHeader loginInfo={this.state.loginInfo} homePage={false}/>
         <Content className="temp-content">
           {/*
               页面控件放置的地方
@@ -36,7 +36,7 @@ class Template extends React.Component {
 
 
               以下是跳转的标准写法
-              <Link to={{pathname: '/？？？', state: {lastUrl: this.props.location.pathname, logined: this.state.logined }}}>   
+              <Link to={{pathname: '/？？？', state: {lastUrl: this.props.location.pathname, loginInfo: this.state.loginInfo }}}>   
                 <其他控件>
               </Link>
           */}

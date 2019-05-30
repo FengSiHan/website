@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Col, message, Input } from 'antd';
+import { Menu, Col, Input } from 'antd';
 import { withRouter } from 'react-router-dom';
 const Search = Input.Search;
 class AcSearch extends React.Component
@@ -10,6 +10,7 @@ class AcSearch extends React.Component
     var type=this.props.type;
     if (type===undefined) type=0
     this.state = {type: type}  //
+    this.state.loginInfo = this.props.loginInfo;
   }
 
   handleSearch(value)
@@ -25,7 +26,7 @@ class AcSearch extends React.Component
       this.forceUpdate();
     }
     else 
-      this.props.history.push({pathname:'/searchResult', state:{}});
+      this.props.history.push({pathname:'/searchResult', state:{loginInfo: this.state.loginInfo}});
   }
 
   handleClick= e=>

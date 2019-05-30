@@ -12,17 +12,17 @@ class AcHeader extends React.Component
   constructor(props)
   {
     super(props);
-    this.state = {logined:this.props.logined, homePage:this.props.homePage};
+    this.state = {loginInfo:this.props.loginInfo, homePage:this.props.homePage};
   }
 
-  getRemainComponent()
+  getRemainComponent = () =>
   {
-    if (this.state.logined === true) 
+    if (this.state.loginInfo.logined === true) 
     {
       return (
         <Col xs={0} sm={0} md={5} lg={4} xl={3} offset={2}>
           <b style={{margin: "0px 10px 0px 10px"}}><font color='#fff'>Welcome!</font></b>
-          <Link to={{pathname: '/personal', state: {lastUrl: this.props.location.pathname, logined: this.state.logined }}}>
+          <Link to={{pathname: '/personal', state: {lastUrl: this.props.location.pathname, loginInfo: this.state.loginInfo }}}>
             <Avatar />
           </Link>
         </Col>
@@ -49,15 +49,15 @@ class AcHeader extends React.Component
         <div>
           <Row>
             <Col xl={3} xxs={20} xs={20} sm={20} md={3} lg={3}>
-              <Link to={{pathname: '/', state: {lastUrl: this.props.location?this.props.location.pathname:'/', logined: this.state.logined}}}>
+              <Link to={{pathname: '/', state: {lastUrl: this.props.location?this.props.location.pathname:'/', loginInfo: this.state.loginInfo}}}>
                 <div className="logo" style={{verticalAlign:true, lineHeight: '64px', float:'left'}}>
                   <img src={logo} alt="logo" style={{height:'30px', weight:'30px'}}/>
                   <b><font color='white'>云学术</font></b>
                 </div>
               </Link>
             </Col>
-            <AcDrawer logined={ this.state.logined } type={this.props.type}/>
-            <AcSearch homePage={ this.state.homePage } type={this.props.type}/>
+            <AcDrawer loginInfo={ this.state.loginInfo } type={this.props.type}/>
+            <AcSearch homePage={ this.state.homePage } loginInfo={ this.state.loginInfo } type={this.props.type}/>
             {this.getRemainComponent()}
           </Row>
         </div>

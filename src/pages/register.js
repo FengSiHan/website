@@ -35,7 +35,7 @@ class RegisterPageClass extends React.Component {
     {
         this.state.lastUrl = '/';
     }
-
+    this.state.loginInfo = {isExpert: false, logined: false, un:''}
   }
   handleSubmit = (e) =>
   {
@@ -71,7 +71,7 @@ class RegisterPageClass extends React.Component {
         });
 
         // message.info("注册成功");
-        // this.state.logined = true;
+        // this.state.loginInfo = true;
         // console.log(this.state.lastUrl);
         // this.props.history.push({pathname: this.state.lastUrl, state: this.state});
         //this.props.history.push({pathname:'/',  state: this.state});
@@ -141,7 +141,7 @@ class RegisterPageClass extends React.Component {
 
     return (
       <Layout className="reg-layout">
-        <AcHeader logined={false} homePage={false}/>
+        <AcHeader loginInfo={this.state.loginInfo} homePage={false}/>
         <Content className="reg-content">
           <div className="reg-div-form">
             <Form {...formItemLayout} className="reg-form" onSubmit={this.handleSubmit}>

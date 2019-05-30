@@ -152,10 +152,11 @@ class PersonalPageClass extends React.Component
     }
 
     try {
-      this.state.logined = {logined: this.props.location.state.logined};
+      this.state = {loginInfo: this.props.location.state.loginInfo};
     } catch (error) {
-      this.state = {logined: false};
+        this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
+
     try {
       this.state.isExpert = this.props.location.state.isExpert;
     } catch (error) {
@@ -272,10 +273,10 @@ class PersonalPageClass extends React.Component
       </Select>,
     );
 
-    console.log(this.state.logined);
+    console.log(this.state.loginInfo);
     return (
       <Layout className="personal-layout">
-        <AcHeader logined={this.state.logined} homePage={false}/>
+        <AcHeader loginInfo={this.state.loginInfo} homePage={false}/>
         <Content className="personal-content">
           <div className="personal-left-div">
             <Form {...formItemLayout} onSubmit={this.handleSubmit}>

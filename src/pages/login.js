@@ -24,6 +24,7 @@ class LoginPageClass extends React.Component
         {
             this.state.lastUrl = '/';
         }
+        this.state.loginInfo = {isExpert: false, logined: false, un:''}
     }
 
     handleSubmit = (e) => 
@@ -33,11 +34,10 @@ class LoginPageClass extends React.Component
             if (!err) {
             console.log('Received values of form: ', values);
             message.info("登陆成功");
-            // this.setState({logined : true});
             
             // eslint-disable-next-line
-            this.state.logined = true;
-            //console.log(this.state.logined);
+            this.state.loginInfo = {isExpert: true, logined: true, un:'testUser'};
+            //console.log(this.state.loginInfo);
             this.props.history.push({pathname:this.state.lastUrl, state: this.state});
             }
         });
@@ -48,7 +48,7 @@ class LoginPageClass extends React.Component
         const { getFieldDecorator } = this.props.form;
         return (
             <Layout className="login-layout">
-                <AcHeader logined={false}/>
+                <AcHeader loginInfo={this.state.loginInfo}/>
                 <Content className="login-content">
                     <div className="login-form">
                         <Form onSubmit={this.handleSubmit}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Button, message } from 'antd';
+import { Layout, message } from 'antd';
 import  AcHeader  from '../controls/acHeader'
 import  AcFooter  from '../controls/acFooter'
 import  AcSearchBox from '../controls/acSearchBox'
@@ -14,9 +14,9 @@ class HomePage extends React.Component
     {
         super(props);
         try {
-            this.state = {logined: this.props.location.state.logined};
+            this.state = {loginInfo: this.props.location.state.loginInfo};
         } catch (error) {
-            this.state = {logined: false};
+            this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
         }
     }
     tryConnect = () =>
@@ -48,7 +48,7 @@ class HomePage extends React.Component
     {
         return (
             <Layout className="layout">
-                <AcHeader homePage logined={this.state.logined}/>
+                <AcHeader homePage loginInfo={this.state.loginInfo}/>
                 <Content style={{ padding: '0 50px', background:'white'}}>
                     <div className="body">
                         <div style={{margin:"30px"}}>

@@ -135,14 +135,11 @@ class SearchResult extends React.Component {
   constructor(props)
   { 
     super(props);
-
-    var paras = this.props.location.state;
     try {
-      this.state = {logined: paras.logined,type:paras.type,value:paras.value};
+      this.state = {loginInfo: this.props.location.state.loginInfo};
     } catch (error) {
-        this.state = {logined: false,type:2,value:""};//
+      this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
-
     
     
     /*
@@ -162,7 +159,7 @@ class SearchResult extends React.Component {
     
     return (
       <Layout className="sr-layout">
-        <AcHeader logined={this.state.logined} homePage={false} type={this.state.type} />
+        <AcHeader loginInfo={this.state.loginInfo} homePage={false} type={this.state.type} />
         <Content className="sr-content">
           <ResultShow type={this.state.type}/>
         </Content>
