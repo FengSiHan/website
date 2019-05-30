@@ -1,0 +1,23 @@
+.sr-layout
+{
+    min-height: 900px;
+    height:100%;
+    width: 100%;
+    position: absolute;
+    background: #fff;
+    text-align: center;
+}
+.sr-content
+{
+    width: 80%;
+    margin: 10px auto 10px auto;
+    text-align: center;
+}
+.sr-body
+{
+    height: 100%;
+    width: 100%;
+    padding: 8% 4% 0% 4%;
+    text-align: center;
+   
+}
