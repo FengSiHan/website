@@ -55,7 +55,7 @@ class AcDrawer extends React.Component
             </div>}
           </div>
           <Divider/>
-            <AcSearchBox type={0/*type应被传入页面，指示搜索类型*/}/>   
+            <AcSearchBox type={this.props.type}/>   
         </Drawer>
       </Col>
     );

@@ -8,6 +8,7 @@ import HomePage from './pages/home'
 import RegisterPage from './pages/register'
 import LoginPage from './pages/login'
 import PersonalPage from './pages/personal'
+import SearchResult from './pages/searchResult';
 
 ReactDOM.render(
     <Router>
@@ -17,6 +18,7 @@ ReactDOM.render(
             <Route path="/register" component={RegisterPage}/>
             <Route path="/login" component={LoginPage}/>
             <Route path="/personal" component={PersonalPage}/>
+            <Route path="/searchResult" component={SearchResult}/>
         </div>
     </Router>,
     document.getElementById('root'));

@@ -1,18 +1,24 @@
 import React from 'react';
-import { Input,Radio } from 'antd'
+import { Input,Radio,message } from 'antd'
+import { withRouter } from 'react-router-dom';
 
 const Search=Input.Search
 //type代表搜索类型：专家、机构、论文（成果）
 //handleSearch 响应搜索
-//class 样式名
 class AcSearchBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state={type:this.props.type,handleSearch:props.handleSearch,class:props.class,value:""}
+    this.state={type:this.props.type,value:""}
+    this.handleSearch=this.handleSearch.bind(this);
   }
 
   handleTypeChange= e=>{
     this.setState({type:e.target.value})
+  }
+
+  handleSearch(value)
+  {
+    this.props.history.push({pathname:'/searchResult', state:{value: value,type:this.state.type}});
   }
   render(){
     var typelist=["专家","机构","论文"];//
@@ -28,7 +34,7 @@ class AcSearchBox extends React.Component {
                 <div>
                   <Search
                     placeholder={"搜"+typelist[this.state.type]}
-                    onSearch={value=>this.state.handleSearch(value)}
+                    onSearch={value=>this.handleSearch(value)}
                     style={{width:this.state.width,float:"left"}}
                     allowClear
                     enterButton
@@ -38,4 +44,4 @@ class AcSearchBox extends React.Component {
             </div>
   } 
 }
-export default AcSearchBox;
+export default withRouter(AcSearchBox);

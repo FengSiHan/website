@@ -56,9 +56,6 @@ class HomePage extends React.Component
                             <span><h1>Academic Cloud</h1></span>
                         </div>
                         <AcSearchBox type={0}/>
-                        <Button type="primary" onClick={this.tryConnect}>
-                            Test connect
-                        </Button>
                     </div>
                 </Content>
                 <AcFooter/>

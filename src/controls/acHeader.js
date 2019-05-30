@@ -56,8 +56,8 @@ class AcHeader extends React.Component
                 </div>
               </Link>
             </Col>
-            <AcDrawer logined={ this.state.logined }/>
-            <AcSearch homePage={ this.state.homePage }/>
+            <AcDrawer logined={ this.state.logined } type={this.props.type}/>
+            <AcSearch homePage={ this.state.homePage } type={this.props.type}/>
             {this.getRemainComponent()}
           </Row>
         </div>
