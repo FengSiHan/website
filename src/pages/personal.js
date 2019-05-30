@@ -11,6 +11,7 @@ import {
   Button,
   Layout,
   Avatar,
+  Modal,
   message
 } from 'antd';
 import './css/personal.css'
@@ -19,8 +20,127 @@ import TextArea from 'antd/lib/input/TextArea';
 const { Content } = Layout;
 const { Option } = Select;
 
+const ChangePdModal = Form.create({ name: 'changePd' })( 
+  class extends React.Component
+  {
+    constructor(props)
+    {
+      super(props);
+      this.state = {confirmDirty: false};
+    }
+
+    handleConfirmBlur = e => {
+      const value = e.target.value;
+      this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+    };
+  
+    compareToFirstPassword = (rule, value, callback) => {
+      const form = this.props.form;
+      if (value && value !== form.getFieldValue('newpd')) {
+        callback('两次密码输入不一致！');
+      } else {
+        callback();
+      }
+    };
+  
+    validateToNextPassword = (rule, value, callback) => {
+      const form = this.props.form;
+      if (value && this.state.confirmDirty) {
+        form.validateFields(['confirm'], { force: true });
+      }
+      callback();
+    };
+
+    render()
+    {
+      const { visible, onCancel, onCreate, form } = this.props;
+      const { getFieldDecorator } = form;
+      return(
+        <Modal visible={visible} title="修改密码" okText="确认修改" onCancel={onCancel} onOk={onCreate}>
+          <Form layout="vertical">
+              <Form.Item label="原密码">
+                {getFieldDecorator('oldpd', {
+                  rules: [{ required: true, message: '请输入原来的密码！' }],
+                })(<Input.Password />)}
+              </Form.Item>
+              <Form.Item label="新密码" hasFeedback>
+                {getFieldDecorator('newpd',{rules: [
+                      {
+                        required: true,
+                          message: '请输入新的密码！' },
+                      {
+                        validator: this.validateToNextPassword,
+                      }
+                    ],
+                  })(<Input.Password/>)}
+              </Form.Item>
+              <Form.Item label="再次输入新密码" hasFeedback>
+                {getFieldDecorator('confirm',{rules: [
+                      {
+                        required: true,
+                          message: '请确认新的密码！' },
+                      {
+                        validator: this.compareToFirstPassword,
+                      }
+                    ],
+                  })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+              </Form.Item>
+            </Form>
+        </Modal>
+      );
+      
+    }
+  }
+);
+
+const ExpertApplyModal = Form.create({ name: 'expertApply' })( 
+  class extends React.Component
+  {
+    render()
+    {
+      const { visible, onCancel, onCreate, form } = this.props;
+      const { getFieldDecorator } = form;
+      return(
+        <Modal visible={visible} title="专家认证" okText="认证" onCancel={onCancel} onOk={onCreate}>
+          <Form layout="vertical">
+              <Form.Item label="真实姓名">
+                {getFieldDecorator('realName', {
+                  rules: [{ required: true, message: '请输入真实姓名！' }],
+                })(<Input />)}
+              </Form.Item>
+              <Form.Item label="身份证号码">
+                {getFieldDecorator('idCard')(<Input/>)}
+              </Form.Item>
+              <Form.Item label="所在机构" hasFeedback>
+                {getFieldDecorator('org',{rules: [
+                      {
+                        required: true,
+                        message: '请输入所在机构' 
+                      }],
+                  })(<Input />)}
+              </Form.Item>
+              <Form.Item label="个人简介">
+                {getFieldDecorator('intro')(<TextArea style={{minHeight:'80px'}}/>)}
+              </Form.Item>
+              <Form.Item label="研究领域">
+                {getFieldDecorator('filed',{rules: [
+                      {
+                        required: true,
+                        message: '请输入擅长领域' 
+                      }
+                    ],
+                  })(<TextArea style={{minHeight:'80px'}}/>)}
+              </Form.Item>
+            </Form>
+        </Modal>
+      );
+    }
+  }
+);
+
 //需要保存是否是专家以及用户名
-class PersonalPageClass extends React.Component {
+class PersonalPageClass extends React.Component 
+{
   constructor(props)
   { 
     super(props);
@@ -32,19 +152,27 @@ class PersonalPageClass extends React.Component {
     }
 
     try {
-      this.state = {logined: this.props.location.state.logined};
+      this.state.logined = {logined: this.props.location.state.logined};
     } catch (error) {
       this.state = {logined: false};
     }
+    try {
+      this.state.isExpert = this.props.location.state.isExpert;
+    } catch (error) {
+      this.state.isExpert = false;
+    }
+    this.state.changePdVisible = false;
+    this.state.expertApplyVisible = false;
   }
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log('Received values of change passward form: ', values);
       }
     });
+
   };
 
   validateToNextPassword = (rule, value, callback) => {
@@ -55,6 +183,61 @@ class PersonalPageClass extends React.Component {
     callback();
   };
 
+  showChangePdModal = () =>
+  {
+    this.setState({changePdVisible: true});
+  }
+  handleChangePdCancel = () =>
+  {
+    this.setState({changePdVisible: false});
+  }
+
+  showExpertApplyModal = () =>
+  {
+    this.setState({expertApplyVisible: true});
+  }
+  handleExpertApplyCancel = () =>
+  {
+    this.setState({expertApplyVisible: false});
+  }
+
+  handleExpertApplyConfirm = () => {
+    const form = this.EAformRef.props.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      message.info('申请中，请等待管理员验证');
+      console.log('Received values of expert apply form: ', values);
+      form.resetFields();
+      this.setState({ expertApplyVisible: false });
+    });
+  };
+
+  handleChangePdConfirm = () =>
+  {
+    const form = this.CPformRef.props.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      if (form.getFieldValue('oldpd') === form.getFieldValue('confirm'))
+      {
+        message.info('新密码和旧密码不能相同!');
+        return;
+      }
+      message.info('修改成功，下次请用新密码登陆');
+      console.log('Received values of form: ', values);
+      form.resetFields();
+      this.setState({ changePdVisible: false });
+    });
+  }
+  saveCPFormRef = formRef => {
+    this.CPformRef = formRef;
+  };
+  saveEAFormRef = formRef => {
+    this.EAformRef = formRef;
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -94,7 +277,7 @@ class PersonalPageClass extends React.Component {
       <Layout className="personal-layout">
         <AcHeader logined={this.state.logined} homePage={false}/>
         <Content className="personal-content">
-          <div className="personal-outer-div">
+          <div className="personal-left-div">
             <Form {...formItemLayout} onSubmit={this.handleSubmit}>
               <Form.Item label="Avatar">  
                 {getFieldDecorator('avatar', {
@@ -158,17 +341,38 @@ class PersonalPageClass extends React.Component {
           </div>
           <div className='personal-right-div'>
             <div style={{margin: '20px'}}>
-              <Button type="primary">
+              <Button type="primary" onClick={this.showChangePdModal}>
                 修改密码
               </Button>
             </div>
             <div style={{margin: '20px'}}>
-              <Button type="primary">
-                申请专家
+              <Button type="primary" onClick={this.showExpertApplyModal}>
+                专家认证
+              </Button>
+            </div>
+            <div style={{margin: '20px'}}>
+              <Button type="primary" disabled={!this.state.isExpert} onClick={()=>this.props.history.push({pathname:'/project', state: this.state})}>
+                管理项目
+              </Button>
+            </div>
+            <div style={{margin: '20px'}}>
+              <Button type="primary" disabled={!this.state.isExpert} onClick={()=>this.props.history.push({pathname:'/thesis', state: this.state})}>
+                管理论文
+              </Button>
+            </div>
+            <div style={{margin: '20px'}}>
+              <Button type="primary" disabled={!this.state.isExpert} onClick={()=>this.props.history.push({pathname:'/patent', state: this.state})}>
+                管理专利
               </Button>
             </div>
           </div>
         </Content>
+        <ChangePdModal 
+          wrappedComponentRef={this.saveCPFormRef} visible={this.state.changePdVisible} 
+          onCancel={this.handleChangePdCancel} onCreate={this.handleChangePdConfirm}/>
+          <ExpertApplyModal 
+            wrappedComponentRef={this.saveEAFormRef} visible={this.state.expertApplyVisible} 
+            onCancel={this.handleExpertApplyCancel} onCreate={this.handleExpertApplyConfirm}/>
         <AcFooter />
       </Layout>
     );

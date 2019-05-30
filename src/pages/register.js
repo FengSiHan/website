@@ -87,7 +87,7 @@ class RegisterPageClass extends React.Component {
   compareToFirstPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('pd')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('两次密码输入不一致，请重新输入！');
     } else {
       callback();
     }
@@ -100,6 +100,16 @@ class RegisterPageClass extends React.Component {
     }
     callback();
   };
+  handleAgreement = (rule, value, callback) => {
+    if (this.props.form.getFieldValue('agreement') === false)
+    {
+      callback('注册需要同意协议');
+    }
+    else
+    {
+      callback();
+    }
+  }
 
 
 
@@ -140,7 +150,7 @@ class RegisterPageClass extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your username!',
+                      message: '请输入合法的用户名',
                     },
                   ],
                 })(<Input />)}
@@ -150,7 +160,7 @@ class RegisterPageClass extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your password!',
+                      message: '请输入密码！',
                     },
                     {
                       validator: this.validateToNextPassword,
@@ -163,7 +173,7 @@ class RegisterPageClass extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please confirm your password!',
+                      message: '请确认密码！',
                     },
                     {
                       validator: this.compareToFirstPassword,
@@ -172,9 +182,19 @@ class RegisterPageClass extends React.Component {
                 })(<Input.Password onBlur={this.handleConfirmBlur} />)}
               </Form.Item>
               <Form.Item {...tailFormItemLayout}>
-                <Checkbox>
-                  I have read the <a href="/agreement">agreement</a>
-                </Checkbox>
+                {getFieldDecorator('agreement',{
+                  rules: [
+                    {
+                      required: true,
+                      message: '注册需要同意协议'
+                    },
+                    {
+                      validator: this.handleAgreement
+                    }
+                  ]
+                })(<Checkbox>
+                    I have read the <a href="/agreement">agreement</a>
+                  </Checkbox>)}
               </Form.Item>
               <Form.Item style={{margin: '0 auto 0 auto', textAlign: 'center', display:'inline-block'}}>
                 <Button type="primary" htmlType="submit">
