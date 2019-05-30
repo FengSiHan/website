@@ -49,7 +49,7 @@ class AcHeader extends React.Component
         <div>
           <Row>
             <Col xl={3} xxs={20} xs={20} sm={20} md={3} lg={3}>
-              <Link to={{pathname: '/', state: {lastUrl: this.props.location?this.props.location.pathname:'/'}}}>
+              <Link to={{pathname: '/', state: {lastUrl: this.props.location?this.props.location.pathname:'/', logined: this.state.logined}}}>
                 <div className="logo" style={{verticalAlign:true, lineHeight: '64px', float:'left'}}>
                   <img src={logo} alt="logo" style={{height:'30px', weight:'30px'}}/>
                   <b><font color='white'>云学术</font></b>
