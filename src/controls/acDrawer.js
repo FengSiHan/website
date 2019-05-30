@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, message, Button, Icon, Divider, Drawer, Avatar } from 'antd';
+import { Col, Button, Icon, Divider, Drawer, Avatar } from 'antd';
 import { Link } from 'react-router-dom'
 import AcSearchBox from './acSearchBox'
 import { withRouter } from 'react-router-dom';

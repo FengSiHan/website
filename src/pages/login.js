@@ -34,6 +34,8 @@ class LoginPageClass extends React.Component
             console.log('Received values of form: ', values);
             message.info("登陆成功");
             // this.setState({logined : true});
+            
+            // eslint-disable-next-line
             this.state.logined = true;
             //console.log(this.state.logined);
             this.props.history.push({pathname:this.state.lastUrl, state: this.state});
