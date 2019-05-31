@@ -1,15 +1,58 @@
-.temp-layout
+.project-layout
 {
-    min-height: 600px;
+    min-height: 700px;
     height:100%;
     width: 100%;
     position: absolute;
     background: #fff;
     text-align: center;
 }
-.temp-content
+.project-content
 {
     width: 80%;
     margin: 10px auto 10px auto;
     text-align: center;
+}
+.project-infinite-container 
+{
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    overflow: auto;
+    margin: 40px 0 0 0;
+    padding: 8px 24px;
+    height: 350px;
+}
+.project-loading-container 
+{
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    text-align: center;
+}
+.project-operate-div
+{
+    margin: 50px 0 0 0;
+}
+.project-detail-div
+{
+    width: 80%;
+    margin: 0% 10% 0% 10%;
+}
+.project-detail-left-span
+{
+    width: 60px;
+    margin: 0 10px 0 0;
+    text-align: left;
+    float: left;
+}
+.project-detail-right-span
+{
+    width: 80%;
+    text-align: left;
+    float: right;
+}
+.project-divider
+{
+    margin: 5px 0 5px 0;
+    height: 1px;
 }
