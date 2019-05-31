@@ -11,7 +11,7 @@ import PersonalPage from './pages/personal'
 import SearchResult from './pages/searchResult';
 import ProjectPage from './pages/project';
 import ThesisPage from './pages/thesis';
-
+import PatentPage from './pages/patent';
 ReactDOM.render(
     <Router>
         <div>
@@ -23,6 +23,7 @@ ReactDOM.render(
             <Route path="/searchResult" component={SearchResult}/>
             <Route path="/project" component={ProjectPage}/>
             <Route path="/thesis" component={ThesisPage}/>
+            <Route path="/patent" component={PatentPage}/>
         </div>
     </Router>,
     document.getElementById('root'));

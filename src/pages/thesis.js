@@ -80,7 +80,8 @@ class ThesisPage extends React.Component
     this.state.hasMore = true;
     this.state.detailVisible = false;
     this.state.thesisCreateVisible = false;
-    this.state.projectDetailData = {title: '如今的社会,关注点狭窄到不可思议', author: 'sss1998', year:'2015年',
+    this.state.projectDetailData = {title: '如今的社会,关注点狭窄到不可思议', etitle:'Incredible Focus in Today\'s Society',
+                                    author: 'sss1998', year:'2015年',
                                     publication: '新理财（政府理财）',
                                     epublication: 'GOVERNMENT FINANC;',
                                     abstract: '肠道微生物通过口服进入消化道，经过胃时要处于PH值1.5-2的极酸环境，氢离子大量进入细菌，威胁其生存。为了适应这种极端环境，保持细胞内正常的PH值，肠道微生物进化出了一系列的抗酸系统。这些抗酸系统通常是通过膜反向转运蛋白，交换细胞内外质子化程度不同的底物来消耗细胞内的氢离子，从而维持细胞内正常PH值。我们已经得到了大肠杆菌抗酸系统中重要膜转运蛋白AdiC不同构象的高分辨率三维结构，通过比较分析这些结构，我们对细菌抗酸性的分子机制有了初步的了解，但还有一系列的基本问题有待回答。我们计划在已有的生化和结构分析的基础上，针对上述问题，综合多种研究手段探索肠道微生物适应强酸性极端环境的分子机制，并期望在此基础上设计特异性抑制肠道病原微生物的小分子。',
@@ -187,7 +188,7 @@ class ThesisPage extends React.Component
             </InfiniteScroll>
           </div>
           <div className="project-operate-div">
-            <Button type='primary' onClick={()=>{this.setState({thesisCreateVisible: true})}}>新建项目</Button>
+            <Button type='primary' onClick={()=>{this.setState({thesisCreateVisible: true})}}>新建论文</Button>
           </div>
         </Content>
         <AcThesisDetail data={this.state.projectDetailData} visible={this.state.detailVisible} onCancel={()=>this.setState({detailVisible: false})}/>
