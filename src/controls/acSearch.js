@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Col, Input } from 'antd';
+import { Menu, Col, Input, message } from 'antd';
 import { withRouter } from 'react-router-dom';
 const Search = Input.Search;
 class AcSearch extends React.Component
@@ -18,15 +18,15 @@ class AcSearch extends React.Component
     var path=this.props.location.pathname;
     if (path==='/searchResult') 
     {
-      this.setState(
-        {
-          value: value
-        }
-      )
-      this.forceUpdate();
+      //message.info(value+this.state.type);
+      this.props.onacSearch(value,this.state.type); 
     }
     else 
+    {
+      var newstate = this.state;
+      newstate.value = value;
       this.props.history.push({pathname:'/searchResult', state:{loginInfo: this.state.loginInfo}});
+    }
   }
 
   handleClick= e=>

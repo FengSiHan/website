@@ -11,6 +11,9 @@ class AcDrawer extends React.Component
   constructor(props)
   {
     super(props);
+    var type=this.props.type;
+    if (type===undefined) type=0
+    this.state = {type: type}
     this.state.loginInfo =  this.props.loginInfo;
   }
   showDrawer = () =>
@@ -55,7 +58,7 @@ class AcDrawer extends React.Component
             </div>}
           </div>
           <Divider/>
-            <AcSearchBox type={this.props.type}/>   
+            <AcSearchBox type={this.state.type} onacSearch={this.props.onacSearch}/>   
         </Drawer>
       </Col>
     );

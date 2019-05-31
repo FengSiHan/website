@@ -9,12 +9,11 @@ class ResultShow extends React.Component
   constructor(props)
   {
     super(props);
-    this.state={type:this.props.type};
   }
   render()
   {
     const listData=[];
-    if (this.state.type===2)
+    if (this.props.type==2)
     {
       const columns =
       [
@@ -52,7 +51,7 @@ class ResultShow extends React.Component
           listData.push(
               {
                   id:i,
-                  title:'kjqsbsadddddddddddddddddddddddddddd'+i,
+                  title:this.props.value+i,
                   author:'laiyuan',
                   source:"kkkkk",
                   time:"???",
@@ -75,7 +74,7 @@ class ResultShow extends React.Component
           listData.push(
               {
                   id:i,
-                  name:'kjqsb'+i,
+                  name:this.props.value+i,
                   org:'kjqsbsbsblaiyuan',
                   papernum:i*5,
                   citation:i*11,
@@ -92,7 +91,7 @@ class ResultShow extends React.Component
                 column:2
               }
             }
-            loading
+            //loading
             itemLayout="vertical"
             size="large"
             pagination={{pageSize:6}}
@@ -149,9 +148,18 @@ class SearchResult extends React.Component {
     */
   }
 
+  onacSearch= (val,ty) =>
+      {
+        this.setState(
+          {
+            value:val,
+            type:ty
+          }
+       )
+      }
   render() {
       
-      message.info(this.state.value);
+      //message.info(this.state.value);
       /*
         获取数据传入listdata，名称如下两个for循环
       */
@@ -161,9 +169,9 @@ class SearchResult extends React.Component {
     
     return (
       <Layout className="sr-layout">
-        <AcHeader loginInfo={this.state.loginInfo} homePage={false} type={this.state.type} />
+        <AcHeader loginInfo={this.state.loginInfo} homePage={false} type={this.state.type} onacSearch={this.onacSearch}/>
         <Content className="sr-content">
-          <ResultShow type={this.state.type}/>
+          <ResultShow type={this.state.type} value={this.state.value}/>
         </Content>
         <AcFooter />
       </Layout>

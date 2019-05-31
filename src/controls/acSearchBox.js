@@ -19,9 +19,18 @@ class AcSearchBox extends React.Component {
 
   handleSearch(value)
   {
-    var newstate = this.state;
-    newstate.value = value;
-    this.props.history.push({pathname:'/searchResult', state:newstate});
+    var path=this.props.location.pathname;
+    if (path==='/searchResult') 
+    {
+      this.props.onacSearch(value,this.state.type);
+    }
+    else
+    {
+      var newstate = this.state;
+      newstate.value = value;
+      this.props.history.push({pathname:'/searchResult', state:newstate});
+    }
+    
   }
   render(){
     var typelist=["专家","机构","论文"];//

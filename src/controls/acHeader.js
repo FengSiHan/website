@@ -44,6 +44,7 @@ class AcHeader extends React.Component
   }
   render()
   {
+    
     return (
       <Header className="header">       
         <div>
@@ -56,8 +57,8 @@ class AcHeader extends React.Component
                 </div>
               </Link>
             </Col>
-            <AcDrawer loginInfo={ this.state.loginInfo } type={this.props.type}/>
-            <AcSearch homePage={ this.state.homePage } loginInfo={ this.state.loginInfo } type={this.props.type}/>
+            <AcDrawer loginInfo={ this.state.loginInfo } type={this.props.type} onacSearch={this.props.onacSearch}/>
+            <AcSearch homePage={ this.state.homePage } loginInfo={ this.state.loginInfo } type={this.props.type} onacSearch={this.props.onacSearch}/>
             {this.getRemainComponent()}
           </Row>
         </div>
