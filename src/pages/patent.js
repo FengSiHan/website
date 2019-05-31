@@ -1,16 +1,64 @@
 import React from 'react'
-import { Layout, List, Spin, message, Avatar, Button, Modal, Form, Input} from 'antd';
+import { Layout, List, Spin, message, Avatar, Button, Modal, Divider, Form, Input} from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
 import { withRouter } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
-import AcProjectDetail from '../controls/acProjectDetail'
 import reqwest from 'reqwest';
 import './css//project.css'
+import logo from '../logo.png'
+
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 const { Content } = Layout;
 
+function ProjectDetail(props)
+{
+  const { visible, onCancel, data } = props;
+  return(
+    <Modal visible={visible} title={data.title} okText="关闭" onCancel={onCancel} onOk={onCancel}
+            keyboard={true} closable={false} maskClosable={true} width={'800px'}>
+      <div className="project-detail-div">
+        <div className="project-detail-left-span">领导</div>
+        <div className="project-detail-right-span">{data.leader}</div>
+      </div>
+      <Divider className="project-divider"/>
+      <div className="project-detail-div">
+        <span className="project-detail-left-span">种类</span>
+        <span className="project-detail-right-span">{data.type}</span>
+      </div>
+      <Divider className="project-divider"/>
+      <div className="project-detail-div">
+        <span className="project-detail-left-span">年份</span>
+        <span className="project-detail-right-span">{data.year}</span>
+      </div>
+      <Divider className="project-divider"/>
+      <div className="project-detail-div">
+        <span className="project-detail-left-span">负责单位</span>
+        <span className="project-detail-right-span">{data.org}</span>
+      </div>
+      <Divider className="project-divider"/>
+      <div className="project-detail-div">
+        <span className="project-detail-left-span">关键字</span>
+        <span className="project-detail-right-span">{data.keyword}</span>
+      </div>
+      <Divider className="project-divider"/>
+      <div className="project-detail-div">
+        <span className="project-detail-left-span">英语关键字</span>
+        <span className="project-detail-right-span">{data.ekeyword}</span>
+      </div>
+      <Divider className="project-divider"/>
+      <div className="project-detail-div">
+        <span className="project-detail-left-span">摘要</span>
+        <span className="project-detail-right-span">{data.abstract}</span>
+      </div>
+      <Divider className="project-divider"/>
+      <div className="project-detail-div">
+        <span className="project-detail-left-span">来源</span>
+        <span className="project-detail-right-span">{data.source}</span>
+      </div>
+    </Modal>);
+}
 
 const CreateProjectModal = Form.create({ name: 'projectCreate' })( 
   class extends React.Component
@@ -49,11 +97,11 @@ const CreateProjectModal = Form.create({ name: 'projectCreate' })(
               <Form.Item label="关键字">
                 {getFieldDecorator('keyword')(<Input/>)}
               </Form.Item>
-              <Form.Item label="英文关键字">
+              <Form.Item label="英语关键字">
                 {getFieldDecorator('ekeyword')(<Input/>)}
               </Form.Item>
               <Form.Item label="摘要">
-                {getFieldDecorator('abstract')(<TextArea style={{minHeight:'80px'}}/>)}
+                {getFieldDecorator('filed')(<TextArea style={{minHeight:'80px'}}/>)}
               </Form.Item>
             </Form>
         </Modal>
@@ -193,7 +241,7 @@ class ProjectPage extends React.Component
             <Button type='primary' onClick={()=>{this.setState({projCreateVisible: true})}}>新建项目</Button>
           </div>
         </Content>
-        <AcProjectDetail data={this.state.projectDetailData} visible={this.state.detailVisible} onCancel={()=>this.setState({detailVisible: false})}/>
+        <ProjectDetail data={this.state.projectDetailData} visible={this.state.detailVisible} onCancel={()=>this.setState({detailVisible: false})}/>
         <CreateProjectModal wrappedComponentRef={this.saveProjFormRef} visible={this.state.projCreateVisible}
                             onCancel={()=>{this.setState({projCreateVisible: false})}} onCreate={this.handlePorjCreateConfirm}/>
         <AcFooter />
