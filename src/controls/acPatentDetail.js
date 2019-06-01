@@ -6,7 +6,7 @@ function AcPatentDetail(props)
   const { visible, onCancel, data } = props;
   return(
     <Modal visible={visible} title={data.title} okText="关闭" onCancel={onCancel} onOk={onCancel}
-            keyboard={true} closable={false} maskClosable={true} width={'800px'}>
+            keyboard={true} mask={false} closable={false} maskClosable={true} width={'800px'}>
       <div className="project-detail-div">
         <div className="project-detail-left-span">简介</div>
         <div className="project-detail-right-span">{data.intro}</div>

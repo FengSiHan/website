@@ -1,5 +1,5 @@
 import React from 'react'
-import {List, Avatar, Layout,Button, message,Table} from 'antd'
+import {List, Avatar, Layout,Button, message,Table,Icon,Modal,Divider} from 'antd'
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
 import './css/searchResult.css'
@@ -9,6 +9,9 @@ class ResultShow extends React.Component
   constructor(props)
   {
     super(props);
+    this.state={
+      visible:false,data:{}
+    }
   }
   render()
   {
@@ -19,7 +22,8 @@ class ResultShow extends React.Component
       [
         {
           title:'题名',
-          dataIndex:'title'
+          dataIndex:'title',
+          key:'title'
         },
         {
           title:'作者',
@@ -34,16 +38,26 @@ class ResultShow extends React.Component
           dataIndex:'time'
         },
         {
+          title:'所属领域',
+          dataIndex:'field'
+        },
+        {
           title:'引用',
           dataIndex:'citation'
         },
         {
           title:'下载',
-          dataIndex:'download'
+          dataIndex:'download',
         },
         {
-          title:'所属领域',
-          dataIndex:'field'
+          title:'',
+          render:(text,record) =>
+          (
+            <span>
+            <a><Icon type="download"  onClick={() => {this.setState({data:record,visible:true})}}/></a>
+            
+            </span>
+          )
         }
       ];
       for (let i=0;i<25;i++)
@@ -57,14 +71,32 @@ class ResultShow extends React.Component
                   time:"???",
                   citation:i*11,
                   download:i*5,
+                  points:i+3,
                   field:'sfsdafasdf'
               }
           )
       }
       return(
+        <span>
         <Table
           columns={columns} dataSource={listData}
         />
+        <Modal mask={false} keyboard={true} visible={this.state.visible} footer={null} onCancel={()=>this.setState({visible: false})}>
+            <div className="project-detail-div">
+            <div className="project-detail-left-span">题名:</div>
+            <div className="project-detail-right-span">{this.state.data.title}</div>
+            </div>
+            <Divider className="project-divider"/>
+            <div className="project-detail-div">
+              <div className="project-detail-left-span">所需积分:</div>
+              <div className="project-detail-right-span">{this.state.data.points}</div>
+            </div>
+            <Divider className="project-divider"/>
+            <div className="project-detail-div">
+              <Button onClick={()=>message.info('确认下载')}>确认下载</Button>
+            </div>
+        </Modal>
+          </span>
       );
     }
     else 
@@ -143,6 +175,7 @@ class SearchResult extends React.Component {
     {
         this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
+
     /*
       初始化其他部分
     */
