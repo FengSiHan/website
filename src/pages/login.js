@@ -34,17 +34,48 @@ class LoginPageClass extends React.Component
     handleSubmit = (e) => 
     {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-            console.log('Received values of form: ', values);
-            message.info("登陆成功");
-            
-            // eslint-disable-next-line
-            this.state.loginInfo = {isExpert: true, logined: true, un:'testUser'};
-            //console.log(this.state.loginInfo);
-            this.props.history.push({pathname:this.state.lastUrl, state: this.state});
+        this.props.form.validateFieldsAndScroll((err, values) => 
+        {
+            if (!err) 
+            {
+                var formData = new FormData();
+                formData.append("un", values['un']);
+                formData.append("pd", values['pd']);
+
+                // eslint-disable-next-line
+                this.state.loginInfo.un = values['un'];
+
+                fetch('http://94.191.58.148/login.php',{
+                    method: 'POST',
+                    body: formData,
+                    dataType: 'text'
+                })
+                .then((response)=>response.json())
+                .then((data)=>{
+                    console.log(data);
+                    if (data.result2 === true)
+                    {
+                        message.info('登录成功');
+                        console.log(data);
+
+                        // eslint-disable-next-line
+                        this.state.loginInfo.userid = data.UID;
+                        // eslint-disable-next-line
+                        this.state.loginInfo.isExpert = data.isExpert;
+                        // eslint-disable-next-line
+                        this.state.loginInfo.logined = true;
+                        this.props.history.push({pathname: this.state.lastUrl, state: this.state});
+                    }
+                    else
+                    {
+                        message.info('登录失败: '+ data.err);
+                    }
+                    })
+                .catch(function(err){
+                    message.info('登录失败: '+err);
+                })
             }
-        });
+        })
     };
 
     render()

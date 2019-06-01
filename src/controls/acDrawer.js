@@ -41,7 +41,7 @@ class AcDrawer extends React.Component
           visible={this.state.visible}
         >
           <div style={{margin:"20 20 20 20", padding:"20 20 20 20"}}>
-            {this.state.loginInfo ? 
+            {this.state.loginInfo.logined ? 
             <div>
               <b style={{margin: "0px 10px 0px 10px"}}><font color='black'>Welcome!</font></b>
               <Link to={{pathname: '/personal', state: {lastUrl: this.props.location.pathname, loginInfo: this.state.loginInfo }}}>   

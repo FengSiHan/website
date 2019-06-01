@@ -31,56 +31,56 @@ class RegisterPageClass extends React.Component {
     } catch (error) {
       this.state = {lastUrl: '/'}
     }
-    if (this.state === undefined )
-    {
-        this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
-    }
-    else if (this.state.lastUrl === '/login')
+    if (this.state.lastUrl === '/login')
     {
         this.state.lastUrl = '/';
     }
     this.state.loginInfo = {isExpert: false, logined: false, un:''}
   }
+
   handleSubmit = (e) =>
   {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
+    this.props.form.validateFieldsAndScroll((err, values) => 
+    {
+      if (!err) 
+      {
         var formData = new FormData();
         formData.append("un", values['un']);
         formData.append("pd", values['pd']);
-        console.log(values);
-        console.log('Received values of form: ', formData);
+
+        // eslint-disable-next-line
+        this.state.loginInfo.un = values['un'];
+
         fetch('http://94.191.58.148/register.php',{
             method: 'POST',
             body: formData,
             dataType: 'text'
-        }).then((response)=>
-            {
-                if (response.status !== 200)
-                {
-                    message.info('注册失败 错误码: '+ response.status);
-                    return;
-                }
-                response.text().then(function (data){
-                    // if (data[status] === 1)
-                    // {
-                    //   message.info('成功')
-                    // }
-                    console.log(data);
-                })
-            }
-        ).catch(function(err){
-            message.info('Fetch error: '+err);
-        });
-
-        // message.info("注册成功");
-        // this.state.loginInfo = true;
-        // console.log(this.state.lastUrl);
-        // this.props.history.push({pathname: this.state.lastUrl, state: this.state});
-        //this.props.history.push({pathname:'/',  state: this.state});
+        })
+        .then((response)=>response.json())
+        .then((data)=>{
+          if (data.result2 === true)
+          {
+            message.info('注册成功');
+            
+            // eslint-disable-next-line
+            this.state.loginInfo.userid = data.UID;
+            // eslint-disable-next-line
+            this.state.loginInfo.isExpert = data.isExpert;
+            // eslint-disable-next-line
+            this.state.loginInfo.logined = true;
+            this.props.history.push({pathname: this.state.lastUrl, state: this.state});
+          }
+          else
+          {
+            message.info('注册失败: '+ data.err);
+          }
+        })
+        .catch(function(err){
+            message.info('注册失败: '+err);
+        })
       }
-    });
+    })
   };
 
   handleConfirmBlur = e => {

@@ -3,10 +3,12 @@ import { Layout } from 'antd';
 import './acFooter.css'
 const { Footer } = Layout; 
 
-function AcFooter()
+function AcFooter(props)
 {
+    let {className} = props;
+    if (className == undefined) className="footer";
     return (
-        <Footer className="footer">
+        <Footer className={className}>
             <div>
                 Academic Cloud @2019 Created by AC
             </div>
