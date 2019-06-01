@@ -283,24 +283,14 @@ class PersonalPageClass extends React.Component
         <AcHeader loginInfo={this.state.loginInfo} homePage={false}/>
         <Content className="personal-content">
           <div className="personal-left-div">
-            <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-              <Form.Item label="Avatar">  
+            <Form {...formItemLayout} onSubmit={this.handleSubmit} className='personal-form'>
+              <Form.Item label="头像">
                 {getFieldDecorator('avatar', {
-                })(<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />)}
+                })(<Avatar /*src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" */ />)}
               </Form.Item>
-              <Form.Item label="Username" disabled>  
+              <Form.Item label="用户名" disabled>  
                 {getFieldDecorator('un', {
-                  initialValue: 'InitialValue',
-                  rules: [
-                    {
-                      type: 'un',
-                      message: 'The input is not valid E-mail!',
-                    },
-                    {
-                      required: 'true',
-                      message: 'Please input username'
-                    }
-                  ],
+                  initialValue: this.state.loginInfo.un
                 })(<Input disabled/>)}
               </Form.Item>
               <Form.Item label="E-mail">
@@ -308,7 +298,11 @@ class PersonalPageClass extends React.Component
                   rules: [
                     {
                       type: 'email',
-                      message: 'The input is not valid E-mail!',
+                      message: '请输入合法的Email格式!',
+                    },
+                    {
+                      required: true,
+                      message: '请输入正确的邮箱作为找回密码的凭据！'
                     }
                   ],
                 })(<Input />)}
@@ -316,8 +310,8 @@ class PersonalPageClass extends React.Component
               <Form.Item
                 label={
                   <span>
-                    Nickname&nbsp;
-                    <Tooltip title="What do you want others to call you?">
+                    昵称&nbsp;
+                    <Tooltip title="你想要别人怎么称呼你">
                       <Icon type="question-circle-o" />
                     </Tooltip>
                   </span>
@@ -327,11 +321,11 @@ class PersonalPageClass extends React.Component
                   rules: [{ whitespace: true }],
                 })(<Input />)}
               </Form.Item>
-              <Form.Item label="Phone Number">
+              <Form.Item label="电话号码">
                 {getFieldDecorator('phone', {
                 })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
               </Form.Item>
-              <Form.Item label="Introduction">  
+              <Form.Item label="个人简介">  
                 {getFieldDecorator('intro', {
                 })(<TextArea style={{minHeight: "100px"}}/>)}
               </Form.Item>

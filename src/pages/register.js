@@ -49,13 +49,13 @@ class RegisterPageClass extends React.Component {
         var formData = new FormData();
         formData.append("un", values['un']);
         formData.append("pd", values['pd']);
+        console.log(values);
         console.log('Received values of form: ', formData);
         fetch('http://94.191.58.148/register.php',{
             method: 'POST',
             body: formData,
             dataType: 'text'
-        }).then(
-            function (response)
+        }).then((response)=>
             {
                 if (response.status !== 200)
                 {

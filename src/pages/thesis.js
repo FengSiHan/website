@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, List, Spin, message, Avatar, Button, Modal, Divider, Form, Input} from 'antd';
+import { Layout, List, Spin, message, Avatar, Button, Modal, Form, Input} from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'

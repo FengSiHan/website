@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, List, Spin, message, Avatar, Button, Modal, Divider, Form, Input} from 'antd';
+import { Layout, List, Spin, message, Avatar, Button, Modal, Form, Input} from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
@@ -8,7 +8,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 import reqwest from 'reqwest';
 import './css//project.css'
 import AcPatentDetail from '../controls/acPatentDetail'
-import logo from '../logo.png'
 
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 const { Content } = Layout;
