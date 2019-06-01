@@ -25,6 +25,8 @@
 {
     margin:5% 0 0 0;
     text-align: left;
+    width: 100;
+    min-height: 200px;
 }
 .e-name
 {
@@ -39,4 +41,14 @@
     width:100%;
     height:100px;
     text-align: center;
+}
+.ep-avatar-div
+{
+    width: 30%;
+    float: left;
+}
+.ep-detail-div
+{
+    width: 60%;
+    float: left;
 }

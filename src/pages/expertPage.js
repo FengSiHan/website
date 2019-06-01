@@ -78,15 +78,15 @@ class ExpertPage extends React.Component {
           */}
 
           <div className='ep-card'> 
-              <span style={{margin: ' 0% 5% 0% 0%'}}>
+              <div className='ep-avatar-div'>
                 <Avatar icon="user" size={142}/>
-              </span>
-              <span style={{textAlign:'left'}}>
+              </div>
+              <div className='ep-detail-div'>
                   <p className='e-name'>{edata.name}</p>
                   <p>{edata.org}</p>
                   <p style={{whiteSpace:"pre-wrap"}}>发表文章：{edata.papernum}     被引次数：{edata.citation}</p>      
                   <p>研究领域：{edata.field}</p>   
-              </span>
+              </div>
           </div>
           <br/>
           <div>
