@@ -10,7 +10,10 @@ class ResultShow extends React.Component
   {
     super(props);
     this.state={
-      visible:false,data:{}
+      visible:false,
+      data:{},
+    //  thesisVisible:false,
+   //   thesisData:{}
     }
   }
   render()

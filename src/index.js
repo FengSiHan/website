@@ -12,6 +12,7 @@ import SearchResult from './pages/searchResult';
 import ProjectPage from './pages/project';
 import ThesisPage from './pages/thesis';
 import PatentPage from './pages/patent';
+import ExpertPage from './pages/expertPage';
 ReactDOM.render(
     <Router>
         <div>
@@ -24,6 +25,7 @@ ReactDOM.render(
             <Route path="/project" component={ProjectPage}/>
             <Route path="/thesis" component={ThesisPage}/>
             <Route path="/patent" component={PatentPage}/>
+            <Route path="/expertDetail" component={ExpertPage}/>
         </div>
     </Router>,
     document.getElementById('root'));
