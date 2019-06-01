@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout,Avatar, message,List } from 'antd';
+import { Layout,Avatar, message,List, Divider } from 'antd';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
 import { withRouter } from 'react-router-dom';
@@ -88,6 +88,7 @@ class ExpertPage extends React.Component {
                   <p>研究领域：{edata.field}</p>   
               </div>
           </div>
+          <Divider/>
           <br/>
           <div>
             <div>
