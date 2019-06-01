@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Layout, Avatar } from 'antd';
+import { Row, Col, Button, Layout, Avatar, Menu, Dropdown, message } from 'antd';
 import { Link, withRouter } from 'react-router-dom'
 
 import AcSearch from './acSearch'
@@ -14,17 +14,33 @@ class AcHeader extends React.Component
     super(props);
     this.state = {loginInfo:this.props.loginInfo, homePage:this.props.homePage};
   }
-
+  logOut = () =>
+  {
+    this.state.loginInfo = {isExpert: false, logined: false, un:''};
+    this.props.history.push({pathname: this.state.lastUrl, state: this.state});
+  }
   getRemainComponent = () =>
   {
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          <Button onClick={this.logOut}>
+            退出登录
+          </Button>
+        </Menu.Item>
+      </Menu>
+    );
+
     if (this.state.loginInfo.logined === true) 
     {
       return (
         <Col xs={0} sm={0} md={5} lg={4} xl={3} offset={2}>
           <b style={{margin: "0px 10px 0px 10px"}}><font color='#fff'>Welcome!</font></b>
-          <Link to={{pathname: '/personal', state: {lastUrl: this.props.location.pathname, loginInfo: this.state.loginInfo }}}>
-            <Avatar />
-          </Link>
+          <Dropdown overlay={menu}>
+            <Link to={{pathname: '/personal', state: {lastUrl: this.props.location.pathname, loginInfo: this.state.loginInfo }}}>
+              <Avatar />
+            </Link>
+          </Dropdown>
         </Col>
       );
     }
