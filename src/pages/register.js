@@ -59,6 +59,7 @@ class RegisterPageClass extends React.Component {
         })
         .then((response)=>response.json())
         .then((data)=>{
+          console.log(data);
           if (data.result2 === true)
           {
             message.info('注册成功');
@@ -67,6 +68,8 @@ class RegisterPageClass extends React.Component {
             this.state.loginInfo.userid = data.UID;
             // eslint-disable-next-line
             this.state.loginInfo.isExpert = data.isExpert;
+            // eslint-disable-next-line
+            this.state.loginInfo.point = 0;
             // eslint-disable-next-line
             this.state.loginInfo.logined = true;
             this.props.history.push({pathname: this.state.lastUrl, state: this.state});

@@ -122,6 +122,9 @@ const ExpertApplyModal = Form.create({ name: 'expertApply' })(
               <Form.Item label="个人简介">
                 {getFieldDecorator('intro')(<TextArea style={{minHeight:'80px'}}/>)}
               </Form.Item>
+              <Form.Item label="获得奖项">
+                {getFieldDecorator('award')(<TextArea style={{minHeight:'80px'}}/>)}
+              </Form.Item>
               <Form.Item label="研究领域">
                 {getFieldDecorator('filed',{rules: [
                       {
@@ -231,8 +234,43 @@ class PersonalPageClass extends React.Component
         message.info('新密码和旧密码不能相同!');
         return;
       }
+      var formData = new FormData();
+      formData.append("uid", this.state.loginInfo.UID);
+      formData.append('pd', values['oldpd']);
+      formData.append("npd", values['confirm']);
+
+      // eslint-disable-next-line
+
+      fetch('http://94.191.58.148/changePassword.php',{
+          method: 'POST',
+          body: formData,
+          dataType: 'text'
+      })
+      .then((response)=>response.text())
+      .then((data)=>{
+          console.log('changePd return value:')
+          console.log(data);
+          if (data.data.length === 1)
+          {
+              message.info('登录成功');
+              console.log(data);
+              // eslint-disable-next-line
+              this.state.loginInfo.userid = data.data[0].UID;
+              // eslint-disable-next-line
+              this.state.loginInfo.isExpert = data.data[0].IsExpert === '1';
+              // eslint-disable-next-line
+              this.state.loginInfo.logined = true;
+              this.props.history.push({pathname: this.state.lastUrl, state: this.state});
+          }
+          else
+          {
+              console.log('登录失败1: '+ data.err);
+          }
+          })
+      .catch(function(err){
+        console.log('登录失败2: '+ err);
+      })
       message.info('修改成功，下次请用新密码登陆');
-      console.log('Received values of form: ', values);
       form.resetFields();
       this.setState({ changePdVisible: false });
     });
@@ -293,6 +331,11 @@ class PersonalPageClass extends React.Component
                   initialValue: this.state.loginInfo.un
                 })(<Input disabled/>)}
               </Form.Item>
+              <Form.Item label="积分" disabled>  
+                {getFieldDecorator('point', {
+                  initialValue: this.state.loginInfo.point
+                })(<Input disabled/>)}
+              </Form.Item>
               <Form.Item label="E-mail">
                 {getFieldDecorator('email', {
                   rules: [
@@ -345,7 +388,7 @@ class PersonalPageClass extends React.Component
               </Button>
             </div>
             <div style={{margin: '20px'}}>
-              <Button type="primary" onClick={this.showExpertApplyModal}>
+              <Button type="primary" disabled={this.state.loginInfo.isExpert} onClick={this.showExpertApplyModal}>
                 专家认证
               </Button>
             </div>

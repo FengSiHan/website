@@ -38,11 +38,13 @@ class LoginPageClass extends React.Component
         {
             if (!err) 
             {
-                this.state.loginInfo.un = 'testuser';
-                this.state.loginInfo.logined = true;
-                this.props.history.push({pathname: this.state.lastUrl, state: this.state});
+                // this.state.loginInfo.un = 'testuser';
+                // this.state.loginInfo.logined = true;
+                // this.state.loginInfo.isExpert = true;
+                // this.props.history.push({pathname: this.state.lastUrl, state: this.state});
 
-                return;
+                // return;
+                console.log(values);
                 var formData = new FormData();
                 formData.append("un", values['un']);
                 formData.append("pd", values['pd']);
@@ -58,15 +60,16 @@ class LoginPageClass extends React.Component
                 .then((response)=>response.json())
                 .then((data)=>{
                     console.log(data);
-                    if (data.result2 === true)
+                    if (data.data.length === 1)
                     {
                         message.info('登录成功');
                         console.log(data);
-
                         // eslint-disable-next-line
-                        this.state.loginInfo.userid = data.UID;
+                        this.state.loginInfo.userid = data.data[0].UID;
                         // eslint-disable-next-line
-                        this.state.loginInfo.isExpert = data.isExpert;
+                        this.state.loginInfo.isExpert = data.data[0].IsExpert === '1';
+                        // eslint-disable-next-line
+                        this.state.loginInfo.point = data.data[0].Points;
                         // eslint-disable-next-line
                         this.state.loginInfo.logined = true;
                         this.props.history.push({pathname: this.state.lastUrl, state: this.state});
@@ -93,7 +96,7 @@ class LoginPageClass extends React.Component
                     <div className="login-form">
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Item>
-                            {getFieldDecorator('username', {
+                            {getFieldDecorator('un', {
                                 rules: [{ required: true, message: 'Please input your username!' }],
                             })(
                                 <Input
@@ -103,7 +106,7 @@ class LoginPageClass extends React.Component
                             )}
                             </Form.Item>
                             <Form.Item>
-                            {getFieldDecorator('password', {
+                            {getFieldDecorator('pd', {
                                 rules: [{ required: true, message: 'Please input your Password!' }],
                             })(
                                 <Input

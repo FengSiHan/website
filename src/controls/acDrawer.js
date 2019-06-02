@@ -28,7 +28,7 @@ class AcDrawer extends React.Component
   logOut = () =>
   {
     this.state.loginInfo = {isExpert: false, logined: false, un:''};
-    this.props.history.push({pathname: this.state.lastUrl, state: this.state});
+    this.props.history.push({pathname: '/', state: this.state});
   }
 
   render()
