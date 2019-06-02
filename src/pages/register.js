@@ -58,7 +58,7 @@ class RegisterPageClass extends React.Component {
             body: formData,
             dataType: 'text'
         })
-        .then((response)=>response.text())
+        .then((response)=>response.json())
         .then((data)=>{
           console.log(data);
           if (data.result2 === true)
