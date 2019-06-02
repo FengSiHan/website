@@ -258,10 +258,39 @@ class PersonalPageClass extends React.Component {
       if (err) {
         return;
       }
-      message.info('申请中，请等待管理员验证');
-      console.log('Received values of expert apply form: ', values);
-      form.resetFields();
-      this.setState({ expertApplyVisible: false });
+      var formData = new FormData();
+      formData.append("uid", this.state.loginInfo.UID);
+      formData.append("un", this.state.loginInfo.un);
+      formData.append("idCard", values['idCard']);
+      formData.append("org", values['org']);
+      formData.append("realName", values['realName']);
+      formData.append("intro", values['intro']);
+      formData.append("field", values['field']);
+      formData.append("award", values['award']);
+
+
+
+
+      fetch('http://94.191.58.148/expert_apply.php', {
+        method: 'POST',
+        body: formData,
+        dataType: 'text'
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.status === true) {
+            message.info('申请中，请等待管理员验证');
+            form.resetFields();
+            this.setState({ expertApplyVisible: false });
+          }
+          else {
+            message.info('申请时出现问题: ' + data.err);
+          }
+        })
+        .catch(function (err) {
+          console.log('申请失败2: ' + err);
+        })
     });
   };
 
