@@ -6,9 +6,7 @@ import AcFooter from '../controls/acFooter'
 import { withRouter } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import AcProjectDetail from '../controls/acProjectDetail'
-import reqwest from 'reqwest';
 import './css//project.css'
-const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 const { Content } = Layout;
 
 
@@ -87,20 +85,9 @@ class ProjectPage extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData(res => {
-      this.setState({
-        data: res.results,
-      });
-      for (var i = 0; i < this.state.data.length; ++i) {
-        // eslint-disable-next-line
-        this.state.data[i].id = i;
-      }
-      console.log(res.results);
-    });
-
     var formData = new FormData();
     formData.append("un", this.state.loginInfo.un);
-    formData.append("UID", this.state.loginInfo.UID);
+    formData.append("UID", 1);
     fetch('http://94.191.58.148/get_project.php', {
       method: 'POST',
       body: formData,
@@ -109,40 +96,32 @@ class ProjectPage extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        // this.setState({ projNumber: data.nu });
-        // this.setState({ data: data.array });
-        // for (var i = 0; i < this.state.data.length; ++i) {
-        //   this.state.data[i].id = i;
-        // }
+
+        this.setState({ projNumber: data.length });
+        this.setState({ data: data.data });
+
+        for (var i = 0; i < this.state.data.length; ++i) {
+          // eslint-disable-next-line
+          this.state.data[i].id = i;
+        }
       })
       .catch(function (err) {
         message.info('注册失败: ' + err);
       })
   }
-  fetchData = callback => {
-    reqwest({
-      url: fakeDataUrl,
-      type: 'json',
-      method: 'get',
-      contentType: 'application/json',
-      success: res => {
-        callback(res);
-      },
-    });
-  };
   handleInfiniteOnLoad = () => {
-    if (this.state.hasMore === true) return;
-    this.setState({
-      hasMore: false
-    });
-    let data = this.state.data;
-    this.fetchData(res => {
-      data = data.concat(res.results);
-      this.setState({
-        data,
-        loading: false,
-      });
-    });
+    // if (this.state.hasMore === true) return;
+    // this.setState({
+    //   hasMore: false
+    // });
+    // let data = this.state.data;
+    // this.fetchData(res => {
+    //   data = data.concat(res.results);
+    //   this.setState({
+    //     data,
+    //     loading: false,
+    //   });
+    // });
     return;
     // let data = this.state.data;
     // this.setState({
@@ -174,10 +153,39 @@ class ProjectPage extends React.Component {
       if (err) {
         return;
       }
-      message.info('申请中，请等待管理员验证');
-      console.log('Received values of create project form: ', values);
-      form.resetFields();
-      this.setState({ projCreateVisible: false });
+      var formData = new FormData();
+      formData.append("Title", values['title']);
+      formData.append("Leader", values['leader']);
+      formData.append("Year", values['year']);
+      formData.append("Org", values['org']);
+      formData.append("Keyword", values['keyword']);
+      formData.append("KeywordEn", values['ekeyword']);
+      formData.append("Abstract", values['abstract']);
+      formData.append("UID", this.state.loginInfo.UID);
+
+      var objData = {};
+      formData.forEach((value, key) => objData[key] = value);
+      console.log(JSON.stringify(objData));
+      fetch('http://94.191.58.148/add_project.php', {
+        method: 'POST',
+        body: formData,
+        dataType: 'text'
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.res === true) {
+            console.log(data);
+            message.info('申请中，请等待管理员验证');
+            form.resetFields();
+            this.setState({ projCreateVisible: false });
+          }
+          else {
+            message.info('申请时出现认证');
+          }
+        })
+        .catch(function (err) {
+          message.info('申请时出现错误: ' + err);
+        })
     });
   };
   render() {
@@ -209,10 +217,35 @@ class ProjectPage extends React.Component {
                         //<Avatar src={logo} style={{height:'15px', width:'22px'}}/>
                         <Avatar /*src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" */ />
                       }
-                      title={item.email}
-                      description={item.email}
+                      title={item.Title}
+                      description={item.Keyword}
                     />
-                    <Button onClick={() => console.log(item.id)}>详细信息</Button>
+                    <Button onClick={() => {
+                      var formData = new FormData();
+                      formData.append("projID", this.state.data[item.id].ProjectID);
+                      fetch('http://94.191.58.148/show_project.php', {
+                        method: 'POST',
+                        body: formData,
+                        dataType: 'text'
+                      })
+                        .then((response) => response.json())
+                        .then((data) => {
+                          console.log(data.data[0]);
+                          let data1 = data.data[0];
+                          this.setState({
+                            projectDetailData: {
+                              title: data1.Title, leader: data1.Leader, year: data1.Time,
+                              org: data1.Org, keyword: data1.Keyword,
+                              ekeyword: data1.KeywordEn,
+                              abstract: data1.Abstract
+                            }
+                          })
+                          this.setState({ detailVisible: true });
+                        })
+                        .catch(function (err) {
+                          message.info('获取数据错误: ' + err);
+                        })
+                    }}>详细信息</Button>
                   </List.Item>
                 )}
               >
