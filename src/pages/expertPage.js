@@ -6,7 +6,7 @@ import AcFooter from '../controls/acFooter'
 import { withRouter } from 'react-router-dom';
 import AcThesisDetail from '../controls/acThesisDetail'   
 import './css/expertPage.css'
-import { list } from 'postcss';
+//import { list } from 'postcss';
 
 
 const { Content } = Layout;
@@ -130,6 +130,7 @@ class ExpertPage extends React.Component {
                             key={item.id}
                           >
                           <List.Item.Meta
+                            // eslint-disable-next-line
                             title={<a><p style={{textAlign:"left"}} onClick={() => this.thesisShow(item.id)}>{item.title}</p></a>/*<link to={'/detail'+item.id}>{item.name}</link>*/}
                             description={
                               <div style={{textAlign:"left" }}>

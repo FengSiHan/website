@@ -3,7 +3,7 @@ import React from 'react'
 import {List, Avatar, Layout,Button, message,Table,Icon,Modal,Divider} from 'antd'
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
-import AcThesisDetail from '../controls/acThesisDetail'   
+//import AcThesisDetail from '../controls/acThesisDetail'   
 import './css/searchResult.css'
 
 class ResultShow extends React.Component
@@ -60,8 +60,9 @@ class ResultShow extends React.Component
           render:(text,record) =>
           (
             <span>
+              {// eslint-disable-next-line
             <a><Icon type="download"  onClick={() => {this.setState({data:record,visible:true})}}/></a>
-            
+          }
             </span>
           )
         }
