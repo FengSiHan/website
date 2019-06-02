@@ -26,7 +26,7 @@ class AcSearch extends React.Component
     {
       var newstate = this.state;
       newstate.value = value;
-      this.props.history.push({pathname:'/searchResult', state:{ state:newstate}});
+      this.props.history.push({pathname:'/searchResult', state:newstate});
     }
   }
 

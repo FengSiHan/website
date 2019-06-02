@@ -1,6 +1,6 @@
 import React from 'react'
 // eslint-disable-next-line
-import { Layout,Avatar, message,List, Divider } from 'antd';
+import { Layout,Avatar, message,List, Divider,Radio } from 'antd';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
 import { withRouter } from 'react-router-dom';
@@ -36,7 +36,8 @@ class ExpertPage extends React.Component {
     source: ''
   };
     this.thesisShow=this.thesisShow.bind(this);
-    this.thesisVisible=false;
+    this.state.thesisVisible=false;
+    this.state.othertype_protent=0;
     /*
       初始化其他部分
     */
@@ -59,6 +60,9 @@ class ExpertPage extends React.Component {
       }
     )
   }
+  handleTypeChange= e=>{
+    this.setState({othertype_protent:e.target.value})
+  }
   render() {
     const listData=[];
     for (let i=0;i<25;i++)
@@ -78,15 +82,17 @@ class ExpertPage extends React.Component {
         )
     }
     var edata={
-        id:5,
-        name:'expertname',
+        id:this.state.id,
+        name:'expertname'+this.state.id,
         org:'orginazation',
         papernum:5,
         citation:11,
-        field:'field'
-    }
+        field:'field',
+        introduction:"balablablablalballbsdfaaaaaaaaaaad的三三大夫阿斯发达范德萨法第四法斯蒂芬地方的三剑客佛教卡萨拉丁教父考虑角色打开了佛教克里斯大夫将阿斯打开了解放的卡拉萨解放克拉斯的的开发佛教典籍科技卡三 的萨菲卡桑德拉将风口浪尖的法思考了解放卡拉角色考虑缔结克拉夫加快了角色的快乐将风口浪尖克"
+    } 
     //this.setState({expertdata:edata,thesisdata:listData});
     message.info(edata.name);
+    console.log(this.state.loginInfo);
     return (
       <Layout className="ep-layout">
         <AcHeader loginInfo={this.state.loginInfo} homePage={false}/>
@@ -103,6 +109,7 @@ class ExpertPage extends React.Component {
           */}
 
           <div className='ep-card'> 
+            <div  className='ep-info'>
               <div className='ep-avatar-div'>
                 <Avatar icon="user" size={142}/>
               </div>
@@ -112,11 +119,20 @@ class ExpertPage extends React.Component {
                   <p style={{whiteSpace:"pre-wrap"}}>发表文章：{edata.papernum}     被引次数：{edata.citation}</p>      
                   <p>研究领域：{edata.field}</p>   
               </div>
+            </div>
+            <div className='ep-intro' >
+              <h2>个人简介：</h2>
+              <p>
+                {edata.introduction}
+              </p>
+            </div>
           </div>
           <Divider/>
           <br/>
-          <div>
+          
+          <div style={{width:'100%'}}>
             <div className='ep-thesis'>
+                <h2 style={{textAlign:'left'}}>已发表论文：</h2>
                 <List
                     itemLayout="vertical"
                     size="small"
@@ -143,12 +159,18 @@ class ExpertPage extends React.Component {
                     }
                 />
             </div>
-            <div>
-                    
-            </div>
-            <div>
+            <div className='ep-other'>
+              <div>
+                  <Radio.Group defaultvalue={this.state.othertype_protent} onChange={this.handleTypeChange} buttonStyle="solid">
+                  <Radio.Button value={0}>负责项目</Radio.Button>
+                  <Radio.Button value={1}>相关专利</Radio.Button>
+                  </Radio.Group>
+              </div>
+              <div>
 
+              </div>  
             </div>
+           
           </div>
         </Content>
         <AcThesisDetail  visible={this.state.thesisVisible} onCancel={()=>this.setState({thesisVisible: false})} data={this.state.thesisData} />

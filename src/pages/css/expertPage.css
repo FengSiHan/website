@@ -27,6 +27,19 @@
     width: 100%;
     min-height: 200px;
 }
+.ep-info
+{
+    width:60%;
+    float:left;
+}
+.ep-intro
+{
+    width:40%;
+    float:right;
+    word-wrap:break-word;  
+    word-break:break-all;  
+    overflow: hidden;
+}
 .e-name
 {
     font-size: 28px;
@@ -54,4 +67,10 @@
 .ep-thesis
 {
     width:60%;
+    float: left;
+}
+.ep-other
+{
+    width:40%;
+    float:right;
 }
