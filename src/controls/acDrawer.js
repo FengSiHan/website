@@ -27,6 +27,7 @@ class AcDrawer extends React.Component
   }
   logOut = () =>
   {
+    // eslint-disable-next-line
     this.state.loginInfo = {isExpert: false, logined: false, un:''};
     this.props.history.push({pathname: '/', state: this.state});
   }

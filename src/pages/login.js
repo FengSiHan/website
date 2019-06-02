@@ -28,6 +28,7 @@ class LoginPageClass extends React.Component
         {
             this.state.lastUrl = '/';
         }
+        if (this.state.lastUrl === undefined) this.state.loginInfo.lastUrl = '/';
         this.state.loginInfo = {isExpert: false, logined: false, un:''};
     }
 

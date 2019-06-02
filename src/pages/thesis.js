@@ -8,7 +8,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 import reqwest from 'reqwest';
 import AcThesisDetail from '../controls/acThesisDetail'
 import './css/project.css'
-import logo from '../logo.png'
 
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 const { Content } = Layout;
