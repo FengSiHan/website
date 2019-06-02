@@ -33,7 +33,7 @@ class ResultShow extends React.Component
         },
         {
           title:'作者',
-          dataIndex:'author'
+          dataIndex:'author',
         },
         {
           title:'来源',
@@ -73,13 +73,13 @@ class ResultShow extends React.Component
               {
                   id:i,
                   title:this.props.value+i,
-                  author:'laiyuan',
-                  source:"kkkkk",
-                  time:"???",
+                  author:'laiyuan'+i,
+                  source:"kkkkk"+i,
+                  time:"20252522"+i,
                   citation:i*11,
                   download:i*5,
                   points:i+3,
-                  field:'sfsdafasdf'
+                  field:'sfsdafasdf'+i
               }
           )
       }

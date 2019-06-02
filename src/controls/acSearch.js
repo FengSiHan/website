@@ -10,7 +10,7 @@ class AcSearch extends React.Component
     super(props);
     var type=this.props.type;
     if (type===undefined) type=0
-    this.state = {type: type}  //
+    this.state = {type: type,stype:''+type}  //
     this.state.loginInfo = this.props.loginInfo;
   }
 
@@ -34,7 +34,8 @@ class AcSearch extends React.Component
   {
     this.setState(
       {
-        type:e.key
+        stype:e.key,
+        type:Number(e.key)
       }
     )
   }
@@ -46,10 +47,10 @@ class AcSearch extends React.Component
       this.props.homePage === false ? 
         <div>
           <Col xl={5} lg={6} md={7} sm={0} xs={0}>
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[this.state.type]} onClick={this.handleClick} style={{ lineHeight: '64px', border:''}}>
-              <Menu.Item key={0}>专家</Menu.Item>
-              <Menu.Item key={1}>机构</Menu.Item>
-              <Menu.Item key={2}>论文</Menu.Item>
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[this.state.stype]} onClick={this.handleClick} style={{ lineHeight: '64px', border:''}}>
+              <Menu.Item key={'0'}>专家</Menu.Item>
+              <Menu.Item key={'1'}>机构</Menu.Item>
+              <Menu.Item key={'2'}>论文</Menu.Item>
             </Menu> 
           </Col>
           <Col xl={11} lg={9} md={7} sm={0} xs={0}>
