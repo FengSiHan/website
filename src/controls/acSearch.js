@@ -1,4 +1,5 @@
 import React from 'react'
+// eslint-disable-next-line
 import { Menu, Col, Input, message } from 'antd';
 import { withRouter } from 'react-router-dom';
 const Search = Input.Search;
@@ -25,7 +26,7 @@ class AcSearch extends React.Component
     {
       var newstate = this.state;
       newstate.value = value;
-      this.props.history.push({pathname:'/searchResult', state:{loginInfo: this.state.loginInfo}});
+      this.props.history.push({pathname:'/searchResult', state:{ state:newstate}});
     }
   }
 

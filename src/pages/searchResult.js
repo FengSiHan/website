@@ -1,7 +1,9 @@
 import React from 'react'
+// eslint-disable-next-line
 import {List, Avatar, Layout,Button, message,Table,Icon,Modal,Divider} from 'antd'
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
+import AcThesisDetail from '../controls/acThesisDetail'   
 import './css/searchResult.css'
 
 class ResultShow extends React.Component
@@ -19,6 +21,7 @@ class ResultShow extends React.Component
   render()
   {
     const listData=[];
+    // eslint-disable-next-line
     if (this.props.type==2)
     {
       const columns =

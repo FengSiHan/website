@@ -51,13 +51,13 @@ class RegisterPageClass extends React.Component {
 
         // eslint-disable-next-line
         this.state.loginInfo.un = values['un'];
-
+        console.log(values);
         fetch('http://94.191.58.148/register.php',{
             method: 'POST',
             body: formData,
             dataType: 'text'
         })
-        .then((response)=>response.json())
+        .then((response)=>response.text())
         .then((data)=>{
           console.log(data);
           if (data.result2 === true)

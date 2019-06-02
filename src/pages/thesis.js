@@ -72,7 +72,7 @@ class ThesisPage extends React.Component
     }
     if (this.state === undefined )
     {
-      window.location.href="/"; 
+        window.location.href="/"; 
       //this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
     this.state.data = [];
