@@ -39,13 +39,6 @@ class LoginPageClass extends React.Component
         {
             if (!err) 
             {
-                // this.state.loginInfo.un = 'testuser';
-                // this.state.loginInfo.logined = true;
-                // this.state.loginInfo.isExpert = true;
-                // this.props.history.push({pathname: this.state.lastUrl, state: this.state});
-
-                // return;
-                console.log(values);
                 var formData = new FormData();
                 formData.append("un", values['un']);
                 formData.append("pd", values['pd']);
@@ -60,13 +53,11 @@ class LoginPageClass extends React.Component
                 })
                 .then((response)=>response.json())
                 .then((data)=>{
-                    console.log(data);
                     if (data.data.length === 1)
                     {
                         message.info('登录成功');
-                        console.log(data);
                         // eslint-disable-next-line
-                        this.state.loginInfo.userid = data.data[0].UID;
+                        this.state.loginInfo.UID = data.data[0].UID;
                         // eslint-disable-next-line
                         this.state.loginInfo.isExpert = data.data[0].IsExpert === '1';
                         // eslint-disable-next-line
