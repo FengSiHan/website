@@ -173,6 +173,7 @@ class ResultShow extends React.Component
                     >
                     <List.Item.Meta
                       avatar={<Avatar icon="user" size={64}/>}
+                      // eslint-disable-next-line
                       title={<a><p style={{textAlign:"left"}} onClick={() =>this.props.toExpert(item.id)}>{item.name}</p></a>}
                       description={
                         <div style={{textAlign:"left" }}>

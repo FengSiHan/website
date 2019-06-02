@@ -71,6 +71,11 @@
 }
 .ep-other
 {
-    width:40%;
+    width:30%;
     float:right;
+}
+.ep-protent
+{
+    margin:0% 0% 5% 0%;
+    text-align: left;
 }
