@@ -6,7 +6,7 @@ const { Footer } = Layout;
 function AcFooter(props)
 {
     let {className} = props;
-    if (className == undefined) className="footer";
+    if (className === undefined) className="footer";
     return (
         <Footer className={className}>
             <div>

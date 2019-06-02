@@ -246,7 +246,7 @@ class PersonalPageClass extends React.Component
           body: formData,
           dataType: 'text'
       })
-      .then((response)=>response.text())
+      .then((response)=>response.json())
       .then((data)=>{
           console.log('changePd return value:')
           console.log(data);
@@ -405,6 +405,11 @@ class PersonalPageClass extends React.Component
             <div style={{margin: '20px'}}>
               <Button type="primary" disabled={!this.state.loginInfo.isExpert} onClick={()=>this.props.history.push({pathname:'/patent', state: this.state})}>
                 管理专利
+              </Button>
+            </div>
+            <div style={{margin: '20px'}}>
+              <Button type="primary" onClick={()=>this.props.history.push({pathname:'/kejin', state: this.state})}>
+                积分充值
               </Button>
             </div>
           </div>

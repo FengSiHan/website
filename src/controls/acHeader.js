@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Layout, Avatar, Menu, Dropdown, message } from 'antd';
+import { Row, Col, Button, Layout, Avatar, Menu, Dropdown } from 'antd';
 import { Link, withRouter } from 'react-router-dom'
 
 import AcSearch from './acSearch'
@@ -16,6 +16,8 @@ class AcHeader extends React.Component
   }
   logOut = () =>
   {
+    
+    // eslint-disable-next-line
     this.state.loginInfo = {isExpert: false, logined: false, un:''};
     this.props.history.push({pathname: '/', state: this.state});
   }
