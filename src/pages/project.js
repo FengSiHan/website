@@ -74,7 +74,6 @@ class ProjectPage extends React.Component {
     this.state.hasMore = true;
     this.state.detailVisible = false;
     this.state.projCreateVisible = false;
-    this.state.projNumber = 0;
     this.state.projectDetailData = {
       title: 'test', leader: 'sss1998', year: '2015年',
       org: '清华大学', keyword: '细菌抗酸性系统; 反向转运蛋白; 结构生物学;',
@@ -87,7 +86,7 @@ class ProjectPage extends React.Component {
   componentDidMount() {
     var formData = new FormData();
     formData.append("un", this.state.loginInfo.un);
-    formData.append("UID", 1);
+    formData.append("UID", this.state.loginInfo.UID);
     fetch('http://94.191.58.148/get_project.php', {
       method: 'POST',
       body: formData,
@@ -97,7 +96,6 @@ class ProjectPage extends React.Component {
       .then((data) => {
         console.log(data);
 
-        this.setState({ projNumber: data.length });
         this.setState({ data: data.data });
 
         for (var i = 0; i < this.state.data.length; ++i) {
@@ -106,7 +104,7 @@ class ProjectPage extends React.Component {
         }
       })
       .catch(function (err) {
-        message.info('注册失败: ' + err);
+        message.info('获取数据失败: ' + err);
       })
   }
   handleInfiniteOnLoad = () => {
@@ -180,11 +178,11 @@ class ProjectPage extends React.Component {
             this.setState({ projCreateVisible: false });
           }
           else {
-            message.info('申请时出现认证');
+            message.info('申请时出现错误');
           }
         })
         .catch(function (err) {
-          message.info('申请时出现错误: ' + err);
+          console.log('申请时出现错误: ' + err);
         })
     });
   };
