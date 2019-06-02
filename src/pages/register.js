@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import './css/register.css'
 
 import {
-  Form, 
+  Form,
   Input,
   Checkbox,
   Button,
@@ -16,73 +16,65 @@ const { Content } = Layout;
 
 
 class RegisterPageClass extends React.Component {
-  
-  constructor(props)
-  {
+
+  constructor(props) {
     super(props);
-    
+
     this.state = {
       confirmDirty: false,
       autoCompleteResult: []
     };
-    
+
     try {
       this.state = this.props.location.state;
     } catch (error) {
-      this.state = {lastUrl: '/'}
+      this.state = { lastUrl: '/' }
     }
-    if (this.state.lastUrl === '/login')
-    {
-        this.state.lastUrl = '/';
+    if (this.state.lastUrl === '/login') {
+      this.state.lastUrl = '/';
     }
     if (this.state.lastUrl === undefined) this.state.lastUrl = '/';
-    this.state.loginInfo = {isExpert: false, logined: false, un:''}
+    this.state.loginInfo = { isExpert: false, logined: false, un: '' }
   }
 
-  handleSubmit = (e) =>
-  {
+  handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => 
-    {
-      if (!err) 
-      {
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
         var formData = new FormData();
         formData.append("un", values['un']);
         formData.append("pd", values['pd']);
 
         // eslint-disable-next-line
         this.state.loginInfo.un = values['un'];
-        console.log(values);
-        fetch('http://94.191.58.148/register.php',{
-            method: 'POST',
-            body: formData,
-            dataType: 'text'
+        fetch('http://94.191.58.148/register.php', {
+          method: 'POST',
+          body: formData,
+          dataType: 'text'
         })
-        .then((response)=>response.json())
-        .then((data)=>{
-          console.log(data);
-          if (data.result2 === true)
-          {
-            message.info('注册成功');
-            
-            // eslint-disable-next-line
-            this.state.loginInfo.userid = data.UID;
-            // eslint-disable-next-line
-            this.state.loginInfo.isExpert = data.isExpert;
-            // eslint-disable-next-line
-            this.state.loginInfo.point = 0;
-            // eslint-disable-next-line
-            this.state.loginInfo.logined = true;
-            this.props.history.push({pathname: this.state.lastUrl, state: this.state});
-          }
-          else
-          {
-            message.info('注册失败: '+ data.err);
-          }
-        })
-        .catch(function(err){
-            message.info('注册失败: '+err);
-        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            if (data.result2 === true) {
+              message.info('注册成功');
+
+              // eslint-disable-next-line
+              this.state.loginInfo.userid = data.UID;
+              // eslint-disable-next-line
+              this.state.loginInfo.isExpert = false;
+              // eslint-disable-next-line
+              this.state.loginInfo.point = 0;
+              // eslint-disable-next-line
+              this.state.loginInfo.logined = true;
+              this.props.history.push({ pathname: this.state.lastUrl, state: this.state });
+            }
+            else {
+              message.info('注册失败: ' + data.err);
+            }
+          })
+          .catch(function (err) {
+            message.info('注册失败: ' + err);
+          })
       }
     })
   };
@@ -109,12 +101,10 @@ class RegisterPageClass extends React.Component {
     callback();
   };
   handleAgreement = (rule, value, callback) => {
-    if (this.props.form.getFieldValue('agreement') === false)
-    {
+    if (this.props.form.getFieldValue('agreement') === false) {
       callback('注册需要同意协议');
     }
-    else
-    {
+    else {
       callback();
     }
   }
@@ -149,7 +139,7 @@ class RegisterPageClass extends React.Component {
 
     return (
       <Layout className="reg-layout">
-        <AcHeader loginInfo={this.state.loginInfo} homePage={false}/>
+        <AcHeader loginInfo={this.state.loginInfo} homePage={false} />
         <Content className="reg-content">
           <div className="reg-div-form">
             <Form {...formItemLayout} className="reg-form" onSubmit={this.handleSubmit}>
@@ -190,7 +180,7 @@ class RegisterPageClass extends React.Component {
                 })(<Input.Password onBlur={this.handleConfirmBlur} />)}
               </Form.Item>
               <Form.Item {...tailFormItemLayout}>
-                {getFieldDecorator('agreement',{
+                {getFieldDecorator('agreement', {
                   rules: [
                     {
                       required: true,
@@ -201,10 +191,10 @@ class RegisterPageClass extends React.Component {
                     }
                   ]
                 })(<Checkbox>
-                    I have read the <a href="/agreement">agreement</a>
-                  </Checkbox>)}
+                  I have read the <a href="/agreement">agreement</a>
+                </Checkbox>)}
               </Form.Item>
-              <Form.Item style={{margin: '0 auto 0 auto', textAlign: 'center', display:'inline-block'}}>
+              <Form.Item style={{ margin: '0 auto 0 auto', textAlign: 'center', display: 'inline-block' }}>
                 <Button type="primary" htmlType="submit">
                   Register
                 </Button>
