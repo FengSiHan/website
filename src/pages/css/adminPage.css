@@ -1,0 +1,21 @@
+.ap-layout
+{
+    min-height: 600px;
+    height:100%;
+    width: 100%;
+    background: #fff;
+    text-align: center;
+}
+.ap-content
+{
+    width: 80%;
+    margin: 10px auto 10px auto;
+    text-align: center;
+}
+.ap-footer
+{
+    bottom:10px;
+    width:100%;
+    height:100px;
+    text-align: center;
+}

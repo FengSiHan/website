@@ -1,6 +1,7 @@
 import React from 'react'
 // eslint-disable-next-line
 import {List, Avatar, Layout,Button, message,Table,Icon,Modal,Divider} from 'antd'
+import { withRouter } from 'react-router-dom';
 import AcHeader from '../controls/acHeader'
 import AcFooter from '../controls/acFooter'
 import AcThesisDetail from '../controls/acThesisDetail'   
@@ -255,4 +256,4 @@ class SearchResult extends React.Component {
   }
 }
 
-export default SearchResult;
+export default withRouter(SearchResult);
