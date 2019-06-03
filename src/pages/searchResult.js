@@ -19,8 +19,12 @@ class ResultShow extends React.Component
       thesisData:{}
     }
     this.thesisShow=this.thesisShow.bind(this);
+    this.state.test=false;
   }
-
+  componentDidMount()
+  {
+    this.setState({test:true});
+ }
   thesisShow(id)
   {
     //通过id获取论文详细信息
@@ -40,6 +44,8 @@ class ResultShow extends React.Component
   render()
   {
     const listData=[];
+    console.log('in result render');
+    console.log(this.props.data);
     // eslint-disable-next-line
     if (this.props.type==2)
     {
@@ -47,40 +53,39 @@ class ResultShow extends React.Component
       [
         {
           title:'题名',
-          dataIndex:'title',
-          key:'title',
+          dataIndex:'Title',
           render:(text,record) =>
           (
             <span>
               {// eslint-disable-next-line
-            <a><p style={{textAlign:'left'}}  onClick={() => this.thesisShow(record.id)}>{text}</p></a>
+            <a><p style={{textAlign:'left'}}  onClick={() => this.thesisShow(record.PaperId)}>{text}</p></a>
           }
             </span>
           )
         },
         {
           title:'作者',
-          dataIndex:'author',
+          dataIndex:'RealName',
         },
         {
           title:'来源',
-          dataIndex:'source'
+          dataIndex:'Source'
         },
         {
           title:'发布时间',
-          dataIndex:'time'
+          dataIndex:'Year'
         },
         {
           title:'所属领域',
-          dataIndex:'field'
+          dataIndex:'Area'
         },
         {
           title:'引用',
-          dataIndex:'citation'
+          dataIndex:'Quoted_Num'
         },
         {
           title:'下载',
-          dataIndex:'download',
+          dataIndex:'Download_Num',
         },
         {
           title:'',
@@ -94,26 +99,58 @@ class ResultShow extends React.Component
           )
         }
       ];
-      for (let i=0;i<25;i++)
+      // for (let i=0;i<25;i++)
+      // {
+      //     listData.push(
+      //         {
+      //             id:i,
+      //             title:this.props.value+i,
+      //             author:'laiyuan'+i,
+      //             source:"kkkkk"+i,
+      //             time:"20252522"+i,
+      //             citation:i*11,
+      //             download:i*5,
+      //             points:i+3,
+      //             field:'sfsdafasdf'+i
+      //         }
+      //     )
+      // }
+      const dataShow=this.props.data;
+
+      for (let i=0;i<listData.length;i++)
       {
-          listData.push(
-              {
-                  id:i,
-                  title:this.props.value+i,
-                  author:'laiyuan'+i,
-                  source:"kkkkk"+i,
-                  time:"20252522"+i,
-                  citation:i*11,
-                  download:i*5,
-                  points:i+3,
-                  field:'sfsdafasdf'+i
-              }
-          )
+        listData.pop();
       }
+      console.log('middle?');
+      console.log(listData);
+      console.log(dataShow.length);
+      console.log(dataShow);
+      console.log(dataShow[0]);
+      console.log('middle!');
+      for (let i=0;i<dataShow.length;i++)
+      {
+        var dataItem=dataShow[i];
+        listData.push(
+          {
+            Title: dataItem.Title,
+            RealName: dataItem.RealName,
+            Source: dataItem.Source,
+            Year: dataItem.Year,
+            Area:dataItem.Area,
+            Quoted_Num:dataItem.Quoted_Num,
+            Download_Num: dataItem.Download_Num,
+            PaperID: dataItem.PaperID,
+          }
+          );
+          console.log(listData);
+      }
+      console.log(listData);
+      console.log('alomst render');
+      console.log(dataShow);
       return(
         <span>
           <Table
-            columns={columns} dataSource={listData}
+            columns={columns} dataSource={dataShow}
           />
           <Modal mask={false} keyboard={true} visible={this.state.visible} footer={null} onCancel={()=>this.setState({visible: false})}>
               <div className="project-detail-div">
@@ -218,7 +255,77 @@ class SearchResult extends React.Component {
       初始化其他部分
     */
     this.toExpert=this.toExpert.bind(this);
+    this.getData=this.getData.bind(this);
+    this.componentDidMount=this.componentDidMount.bind(this);
+    this.state.data=[];
   }
+  componentDidMount()
+  {
+    this.getData();
+    this.setState({type:this.state.type});
+ }
+  getData()
+  {
+    if (this.state.type==2)
+    {
+      var type=this.state.type+1;
+      var value=this.state.value;
+      var formData = new FormData();
+      const listData=[];
+      formData.append("flag", type);
+      formData.append("name", value);
+      var objData = {};
+      formData.forEach((value, key) => objData[key] = value);
+      //console.log(JSON.stringify(objData));
+      
+      fetch('http://94.191.58.148/search.php',{
+          method: 'POST',
+          body: formData,
+          dataType: 'text'
+      })
+      .then((response)=>response.json())
+      .then((data)=>{
+        //console.log(data);
+          if (data.data.length >=1)
+          {
+              for (var i=0;i<data.data.length;i++)
+              {
+                let dataItem=data.data[i];
+                listData.push(
+                  {
+                    Title: dataItem.Title,
+                    RealName: dataItem.RealName,
+                    Source: dataItem.Source,
+                    Year: dataItem.Year,
+                    Area:dataItem.Area,
+                    Quoted_Num:dataItem.Quoted_Num,
+                    Download_Num: dataItem.Download_Num,
+                    PaperID: dataItem.PaperID,
+                  }
+                )
+                
+              }
+          }
+          else
+          {
+
+          }
+          })
+      .catch(function(err){
+          message.info('查询失败：'+err);
+      })
+      this.setState({data:listData});
+      console.log(listData);
+      console.log('first time');
+      console.log(this.state.data);
+    }
+    else
+    {
+
+    }
+    
+  }
+  
   toExpert(id)
   {
     var newstate = this.state;
@@ -248,7 +355,7 @@ class SearchResult extends React.Component {
       <Layout className="sr-layout">
         <AcHeader loginInfo={this.state.loginInfo} homePage={false} type={this.state.type} onacSearch={this.onacSearch}/>
         <Content className="sr-content">
-          <ResultShow type={this.state.type} value={this.state.value} toExpert={this.toExpert}/>
+          <ResultShow type={this.state.type} value={this.state.value} toExpert={this.toExpert} data={this.state.data}/>
         </Content>
         <AcFooter />
       </Layout>
