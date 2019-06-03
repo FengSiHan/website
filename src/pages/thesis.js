@@ -30,11 +30,6 @@ const CreateThesisModal = Form.create({ name: 'thesisCreate' })(
                 rules: [{ required: true, message: '请输入英文论文名！' }],
               })(<Input />)}
             </Form.Item>
-            <Form.Item label="作者">
-              {getFieldDecorator('author', {
-                rules: [{ required: true, message: '请输入作者名字！' }],
-              })(<Input />)}
-            </Form.Item>
             <Form.Item label="关键字">
               {getFieldDecorator('keyword', {
                 rules: [{ required: true, message: '请输入关键字！' }],
@@ -62,9 +57,6 @@ const CreateThesisModal = Form.create({ name: 'thesisCreate' })(
             </Form.Item>
             <Form.Item label="摘要">
               {getFieldDecorator('abstract')(<TextArea style={{ minHeight: '80px' }} />)}
-            </Form.Item>
-            <Form.Item label="来源">
-              {getFieldDecorator('source')(<Input />)}
             </Form.Item>
           </Form>
         </Modal>
@@ -114,10 +106,10 @@ class ThesisPage extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
 
         this.setState({ data: data.data });
 
+        //console.log(this.state.data);
         for (var i = 0; i < this.state.data.length; ++i) {
           // eslint-disable-next-line
           this.state.data[i].id = i;
@@ -143,14 +135,12 @@ class ThesisPage extends React.Component {
       var formData = new FormData();
       formData.append("Title", values['title']);
       formData.append("ETitle", values['etitle']);
-      formData.append("Author", values['author']);
       formData.append("Year", values['year']);
       formData.append("Keyword", values['keyword']);
       formData.append("EKeyword", values['ekeyword']);
       formData.append("Publication", values['publication']);
       formData.append("EPublication", values['epublication']);
       formData.append("Abstract", values['abstract']);
-      formData.append("Source", values['source']);
       formData.append("UID", this.state.loginInfo.UID);
 
       var objData = {};
@@ -163,18 +153,19 @@ class ThesisPage extends React.Component {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.res === true) {
+          console.log(data);
+          if (data.res === 1) {
             console.log(data);
             message.info('申请中，请等待管理员验证');
             form.resetFields();
             this.setState({ projCreateVisible: false });
           }
           else {
-            message.info('申请时出现错误');
+            message.info('申请时出现错误' + data.error);
           }
         })
         .catch(function (err) {
-          console.log('申请时出现错误: ' + err);
+          console.log('申请时出现错误:  ' + err);
         })
     });
   };
@@ -211,37 +202,55 @@ class ThesisPage extends React.Component {
                       description={item.Keyword}
                     />
                     <Button onClick={() => {
-                      var formData = new FormData();
-                      formData.append("paperID", this.state.data[item.id].PaperID);
-                      fetch('http://94.191.58.148/show_paper.php', {
-                        method: 'POST',
-                        body: formData,
-                        dataType: 'text'
+                      let data1 = this.state.data[item.id];
+                      this.setState({
+                        thesisDetailData: {
+                          title: data1.Title,
+                          year: data1.Time,
+                          etitle: data1.ETitle,
+                          keyword: data1.Keyword,
+                          ekeyword: data1.KeywordEn,
+                          publication: data1.Publication,
+                          epublication: data1.EPublication,
+                          abstract: data1.Abstract,
+                          source: data1.Source,
+                          author: data1.Author
+                        }
                       })
-                        .then((response) => response.json())
-                        .then((data) => {
-                          console.log(data.data[0]);
-                          let data1 = data.data[0];
-                          this.setState({
-                            thesisDetailData: {
-                              title: data1.Title,
-                              year: data1.Time,
-                              etitle: data1.ETitle,
-                              keyword: data1.Keyword,
-                              ekeyword: data1.KeywordEn,
-                              publication: data1.Publication,
-                              epublication: data1.EPublication,
-                              abstract: data1.Abstract,
-                              source: data1.Source,
-                              author: data1.Author
-                            }
-                          })
-                          this.setState({ detailVisible: true });
-                        })
-                        .catch(function (err) {
-                          message.info('获取数据错误: ' + err);
-                        })
-                    }}>详细信息</Button>
+                      this.setState({ detailVisible: true });
+                    }}
+                    // var formData = new FormData();
+                    // formData.append("paperID", this.state.data[item.id].PaperID);
+                    // fetch('http://94.191.58.148/show_paper.php', {
+                    //   method: 'POST',
+                    //   body: formData,
+                    //   dataType: 'text'
+                    // })
+                    //   .then((response) => response.json())
+                    //   .then((data) => {
+                    //     console.log(data);
+                    //     let data1 = data.data[0];
+                    // this.setState({
+                    //   thesisDetailData: {
+                    //     title: data1.Title,
+                    //     year: data1.Time,
+                    //     etitle: data1.ETitle,
+                    //     keyword: data1.Keyword,
+                    //     ekeyword: data1.KeywordEn,
+                    //     publication: data1.Publication,
+                    //     epublication: data1.EPublication,
+                    //     abstract: data1.Abstract,
+                    //     source: data1.Source,
+                    //     author: data1.Author
+                    //   }
+                    //     })
+                    //     this.setState({ detailVisible: true });
+                    //   })
+                    //   .catch(function (err) {
+                    //     message.info('获取数据错误: ' + err);
+                    //   })
+                    //}}
+                    > 详细信息</Button>
                   </List.Item>
                 )}
               >

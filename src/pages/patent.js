@@ -105,7 +105,7 @@ class PatentPage extends React.Component {
         return;
       }
       var formData = new FormData();
-      formData.append("Title", values['title']);
+      formData.append("PatentName", values['title']);
       formData.append("Year", values['year']);
       formData.append("Org", values['org']);
       formData.append("Intro", values['intro']);
@@ -122,8 +122,8 @@ class PatentPage extends React.Component {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.res === true) {
-            console.log(data);
+          console.log(data);
+          if (data.res === 1) {
             message.info('申请中，请等待管理员验证');
             form.resetFields();
             this.setState({ patentCreateVisible: false });
@@ -166,32 +166,41 @@ class PatentPage extends React.Component {
                         //<Avatar src={logo} style={{height:'15px', width:'22px'}}/>
                         <Avatar /*src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" */ />
                       }
-                      title={<a href="https://ant.design">{item.Title}</a>}
+                      title={<a href="https://ant.design">{item.PatentName}</a>}
                       description={item.Intro}
                     /><Button onClick={() => {
-                      var formData = new FormData();
-                      formData.append("patentID", this.state.data[item.id].PatentID);
-                      fetch('http://94.191.58.148/show_patent.php', {
-                        method: 'POST',
-                        body: formData,
-                        dataType: 'text'
+                      let data1 = this.state.data[item.id];
+                      this.setState({
+                        patentDetailData: {
+                          title: data1.PatentName, year: data1.Year,
+                          org: data1.Org, no: data1.PatentID,
+                          intro: data1.Intro
+                        }
                       })
-                        .then((response) => response.json())
-                        .then((data) => {
-                          console.log(data.data[0]);
-                          let data1 = data.data[0];
-                          this.setState({
-                            patentDetailData: {
-                              title: data1.Title, year: data1.Time,
-                              org: data1.Org, no: data1.PatentID,
-                              intro: data1.Intro
-                            }
-                          })
-                          this.setState({ detailVisible: true });
-                        })
-                        .catch(function (err) {
-                          message.info('获取数据错误: ' + err);
-                        })
+                      this.setState({ detailVisible: true });
+                      // var formData = new FormData();
+                      // formData.append("patentID", this.state.data[item.id].PatentID);
+                      // fetch('http://94.191.58.148/show_patent.php', {
+                      //   method: 'POST',
+                      //   body: formData,
+                      //   dataType: 'text'
+                      // })
+                      //   .then((response) => response.json())
+                      //   .then((data) => {
+                      //     console.log(data.data[0]);
+                      //     let data1 = data.data[0];
+                      //     this.setState({
+                      //       patentDetailData: {
+                      //         title: data1.Title, year: data1.Time,
+                      //         org: data1.Org, no: data1.PatentID,
+                      //         intro: data1.Intro
+                      //       }
+                      //     })
+                      //     this.setState({ detailVisible: true });
+                      //   })
+                      //   .catch(function (err) {
+                      //     message.info('获取数据错误: ' + err);
+                      //   })
                     }}>详细信息</Button>
                   </List.Item>
                 )}
