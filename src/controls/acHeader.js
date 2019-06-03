@@ -75,8 +75,8 @@ class AcHeader extends React.Component
                 </div>
               </Link>
             </Col>
-            <AcDrawer loginInfo={ this.state.loginInfo } type={this.props.type} onacSearch={this.props.onacSearch}/>
-            <AcSearch homePage={ this.state.homePage } loginInfo={ this.state.loginInfo } type={this.props.type} onacSearch={this.props.onacSearch}/>
+            <AcDrawer loginInfo={ this.state.loginInfo } type={this.props.type} onacSearch={this.props.onacSearch} getData={this.props.getData}/>
+            <AcSearch homePage={ this.state.homePage } loginInfo={ this.state.loginInfo } type={this.props.type} onacSearch={this.props.onacSearch} getData={this.props.getData}/>
             {this.getRemainComponent()}
           </Row>
         </div>

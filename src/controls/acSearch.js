@@ -20,6 +20,7 @@ class AcSearch extends React.Component
     if (path==='/searchResult') 
     {
       //message.info(value+this.state.type);
+      this.props.getData(value,this.state.type);
       this.props.onacSearch(value,this.state.type); 
     }
     else 

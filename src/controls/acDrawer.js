@@ -69,7 +69,7 @@ class AcDrawer extends React.Component {
               </div>}
           </div>
           <Divider />
-          <AcSearchBox type={this.state.type} onacSearch={this.props.onacSearch} loginInfo={this.state.loginInfo} />
+          <AcSearchBox type={this.state.type} getData={this.props.getData} onacSearch={this.props.onacSearch} loginInfo={this.state.loginInfo} />
         </Drawer>
       </Col>
     );

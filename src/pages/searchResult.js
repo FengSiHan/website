@@ -25,25 +25,58 @@ class ResultShow extends React.Component {
   }
   thesisShow(id) {
     //通过id获取论文详细信息
-    this.setState(
-      {
-        thesisData: {
-          title: '如今的社会,关注点狭窄到不可思议', etitle: 'Incredible Focus in Today\'s Society',
-          author: 'sss1998' + id, year: '2015年',
-          publication: '新理财（政府理财）',
-          epublication: 'GOVERNMENT FINANC;',
-          abstract: '肠道微生物通过口服进入消化道，经过胃时要处于PH值1.5-2的极酸环境，氢离子大量进入细菌，威胁其生存。为了适应这种极端环境，保持细胞内正常的PH值，肠道微生物进化出了一系列的抗酸系统。这些抗酸系统通常是通过膜反向转运蛋白，交换细胞内外质子化程度不同的底物来消耗细胞内的氢离子，从而维持细胞内正常PH值。我们已经得到了大肠杆菌抗酸系统中重要膜转运蛋白AdiC不同构象的高分辨率三维结构，通过比较分析这些结构，我们对细菌抗酸性的分子机制有了初步的了解，但还有一系列的基本问题有待回答。我们计划在已有的生化和结构分析的基础上，针对上述问题，综合多种研究手段探索肠道微生物适应强酸性极端环境的分子机制，并期望在此基础上设计特异性抑制肠道病原微生物的小分子。',
-          source: 'http://www.wanfangdata.com.cn/details/detail.do?_type=perio&id=xlc-zf201610030'
-        },
-        thesisVisible: true
-      }
-    )
+    var formData = new FormData();
+    var listData = [];
+    formData.append("PaperID", id);
+    var objData = {};
+    formData.forEach((value, key) => objData[key] = value);
+    console.log(JSON.stringify(objData));
+    console.log('sdf');
+    fetch('http://94.191.58.148/show_paper.php', {
+      method: 'POST',
+      body: formData,
+      dataType: 'text'
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('??');
+        console.log(data.data);
+        if (data.data.length >= 1) {
+          let dataItem=data.data[0]
+          this.setState(
+            {
+              thesisData: {
+                abstract: dataItem.Abstract, 
+                etitle: dataItem.ETitle,
+                author: dataItem.Author,
+                year: dataItem.Year,
+                publication: dataItem.Publication,
+                epublication: dataItem.EPublication,
+                source: dataItem.Source,
+                keyword: dataItem.Keyword,
+                ekeyword:dataItem.Ekeyword,
+              },
+              thesisVisible: true
+            }
+          )
+          
+        }
+        else {
+          this.setState({data:[]});
+        }
+        this.setState({ data: listData });
+      })
+      .catch(function (err) {
+        message.info('查询失败：' + err);
+      })
+  
+    
   }
   render() {
-    const listData = [];
-    this.state.counter++;
-    console.log(this.state.counter);
-    console.log(this.props.data);
+    //const listData = [];
+    //this.state.counter++;
+    //console.log(this.state.counter);
+    //console.log(this.props.data);
     // eslint-disable-next-line
     if (this.props.type == 2) {
       const columns =
@@ -55,7 +88,7 @@ class ResultShow extends React.Component {
               (
                 <span>
                   {// eslint-disable-next-line
-                    <a><p style={{ textAlign: 'left' }} onClick={() => this.thesisShow(record.PaperId)}>{text}</p></a>
+                    <a><p style={{ textAlign: 'left' }} onClick={() => this.thesisShow(record.PaperID)}>{text}</p></a>
                   }
                 </span>
               )
@@ -119,11 +152,12 @@ class ResultShow extends React.Component {
         <span>
           <Table
             columns={columns} dataSource={this.props.data}
+            rowKey='PaperID'
           />
           <Modal mask={false} keyboard={true} visible={this.state.visible} footer={null} onCancel={() => this.setState({ visible: false })}>
             <div className="project-detail-div">
               <div className="project-detail-left-span">题名:</div>
-              <div className="project-detail-right-span">{this.state.data.title}</div>
+              <div className="project-detail-right-span">{this.state.data.Title}</div>
             </div>
             <Divider className="project-divider" />
             <div className="project-detail-div">
@@ -142,18 +176,7 @@ class ResultShow extends React.Component {
       );
     }
     else {
-      for (let i = 0; i < 25; i++) {
-        listData.push(
-          {
-            id: i,
-            name: this.props.value + i,
-            org: 'kjqsbsbsblaiyuan',
-            papernum: i * 5,
-            citation: i * 11,
-            field: 'sfsdafasdf'
-          }
-        )
-      }
+      
       return (
         <List
           grid=
@@ -167,24 +190,24 @@ class ResultShow extends React.Component {
           itemLayout="vertical"
           size="large"
           pagination={{ pageSize: 6 }}
-          dataSource={listData}
+          dataSource={this.props.data}
           renderItem=
           {
             item =>
               (
                 <List.Item
-                  key={item.id}
+                  key={item.userID}
                 >
                   <List.Item.Meta
                     avatar={<Avatar icon="user" size={64} />}
                     // eslint-disable-next-line
-                    title={<a><p style={{ textAlign: "left" }} onClick={() => this.props.toExpert(item.id)}>{item.name}</p></a>}
+                    title={<a><p style={{ textAlign: "left" }} onClick={() => this.props.toExpert(item.userID)}>{item.RealName}</p></a>}
                     description={
                       <div style={{ textAlign: "left" }}>
                         <div style={{ float: "left" }}>
-                          <p >{item.org}</p>
-                          <p style={{ whiteSpace: "pre-wrap" }}>发表文章：{item.papernum}     被引次数：{item.citation}</p>
-                          <p>研究领域：{item.field}</p>
+                          <p >{item.OrganizationName}</p>
+                          <p style={{ whiteSpace: "pre-wrap" }}>发表文章：{item.Paper_Num}     被引次数：{item.Quoted_Num}</p>
+                          <p>研究领域：{item.Area}</p>
                         </div>
                         <div style={{ float: "right" }}>
                           <Button type="default" onClick={() => this.props.toExpert(item.id)}>详细信息</Button>
@@ -225,29 +248,32 @@ class SearchResult extends React.Component {
     this.state.done = false;
   }
   componentDidMount() {
-    this.getData();
+    if (this.state.done===false) this.getData(this.state.value,this.state.type);
+  //  this.setState({done:true});
   }
-  getData() {
-    if (this.state.type == 2) {
-      var type = this.state.type + 1;
-      var value = this.state.value;
-      var formData = new FormData();
-      var listData = [];
-      formData.append("flag", type);
-      formData.append("name", value);
-      var objData = {};
-      formData.forEach((value, key) => objData[key] = value);
-      //console.log(JSON.stringify(objData));
+  getData(value,type) {
+    type = type + 1;
+    var formData = new FormData();
+    var listData = [];
+    formData.append("flag", type);
+    formData.append("name", value);
+    var objData = {};
+    formData.forEach((value, key) => objData[key] = value);
+    //console.log(JSON.stringify(objData));
 
-      fetch('http://94.191.58.148/search.php', {
-        method: 'POST',
-        body: formData,
-        dataType: 'text'
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.data.length >= 1) {
-            for (var i = 0; i < data.data.length; i++) {
+    fetch('http://94.191.58.148/search.php', {
+      method: 'POST',
+      body: formData,
+      dataType: 'text'
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.data);
+        if (data.data.length >= 1) {
+          if (type===3)
+          {
+            for (let i = 0; i < data.data.length; i++) 
+            {
               let dataItem = data.data[i];
               listData.push(
                 {
@@ -261,23 +287,37 @@ class SearchResult extends React.Component {
                   PaperID: dataItem.PaperID,
                 }
               )
-
             }
           }
-          else {
-
+          else 
+          {
+            for (let i = 0; i < data.data.length; i++) 
+            {
+              let dataItem = data.data[i];
+              listData.push(
+                {
+                  Area: dataItem.Area,
+                  OrganizationName: dataItem.OrganizationName,
+                  Paper_Num: dataItem.Paper_Num,
+                  Quoted_Num: dataItem.Quoted_Num,
+                  RealName: dataItem.RealName,
+                  uesrID: dataItem.userID,
+                }
+              )
+            }
           }
-          this.setState({ data: listData });
-          this.setState({ done: true });
-        })
-        .catch(function (err) {
-          message.info('查询失败：' + err);
-        })
-    }
-    else {
-
-    }
-
+        }
+        else {
+          this.setState({data:[]});
+        }
+        this.setState({ data: listData });
+        console.log('this.state.done');
+        this.setState({ done: true });
+      })
+      .catch(function (err) {
+        message.info('查询失败：' + err);
+      })
+  
   }
 
   toExpert(id) {
@@ -305,12 +345,11 @@ class SearchResult extends React.Component {
 
     return (
       <Layout className="sr-layout">
-        <AcHeader loginInfo={this.state.loginInfo} homePage={false} type={this.state.type} onacSearch={this.onacSearch} />
+        <AcHeader loginInfo={this.state.loginInfo} homePage={false} type={this.state.type} onacSearch={this.onacSearch} getData={this.getData}/>
         <Content className="sr-content">
-          <div><b>{this.state.done === true ? 'true' : 'false'}</b></div>
           <ResultShow data={this.state.data} type={this.state.type} value={this.state.value} toExpert={this.toExpert} done={this.state.done} />
         </Content>
-        <AcFooter />
+        <AcFooter className='sr-footer'/>
       </Layout>
     );
   }
