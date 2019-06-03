@@ -173,6 +173,9 @@ class PersonalPageClass extends React.Component {
     var formData = new FormData();
     formData.append("uid", this.state.loginInfo.UID);
     formData.append("un", this.state.loginInfo.un);
+    var objData = {};
+    formData.forEach((value, key) => objData[key] = value);
+    console.log(JSON.stringify(objData));
     fetch('http://94.191.58.148/getInfor.php', {
       method: 'POST',
       body: formData,
@@ -182,7 +185,7 @@ class PersonalPageClass extends React.Component {
       .then((data) => {
         console.log(data);
         if (data.status.length !== 0) {
-          this.props.form.setFieldsValue({ 'email': data.status[0].statusemail });
+          this.props.form.setFieldsValue({ 'email': data.status[0].email });
           this.props.form.setFieldsValue({ 'nickname': data.status[0].nickname });
           this.props.form.setFieldsValue({ 'phone': data.status[0].phone });
           this.props.form.setFieldsValue({ 'intro': data.status[0].intro });

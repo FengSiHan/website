@@ -59,7 +59,7 @@ class RegisterPageClass extends React.Component {
               message.info('注册成功');
 
               // eslint-disable-next-line
-              this.state.loginInfo.userid = data.UID;
+              this.state.loginInfo.UID = data.UID;
               // eslint-disable-next-line
               this.state.loginInfo.isExpert = false;
               // eslint-disable-next-line
