@@ -26,7 +26,6 @@ class ResultShow extends React.Component {
   thesisShow(id) {
     //通过id获取论文详细信息
     var formData = new FormData();
-    var listData = [];
     formData.append("PaperID", id);
     var objData = {};
     formData.forEach((value, key) => objData[key] = value);
@@ -62,9 +61,8 @@ class ResultShow extends React.Component {
           
         }
         else {
-          this.setState({data:[]});
+          //
         }
-        this.setState({ data: listData });
       })
       .catch(function (err) {
         message.info('查询失败：' + err);
@@ -201,7 +199,7 @@ class ResultShow extends React.Component {
                   <List.Item.Meta
                     avatar={<Avatar icon="user" size={64} />}
                     // eslint-disable-next-line
-                    title={<a><p style={{ textAlign: "left" }} onClick={() => this.props.toExpert(item.userID)}>{item.RealName}</p></a>}
+                    title={<a><p style={{ textAlign: "left" }} onClick={() => this.props.toExpert(item.userID)}>{item.RealName+item.uesrID}</p></a>}
                     description={
                       <div style={{ textAlign: "left" }}>
                         <div style={{ float: "left" }}>
@@ -210,7 +208,7 @@ class ResultShow extends React.Component {
                           <p>研究领域：{item.Area}</p>
                         </div>
                         <div style={{ float: "right" }}>
-                          <Button type="default" onClick={() => this.props.toExpert(item.id)}>详细信息</Button>
+                          <Button type="default" onClick={() => this.props.toExpert(item.userID)}>详细信息</Button>
                         </div>
                       </div>
                     }
@@ -301,7 +299,7 @@ class SearchResult extends React.Component {
                   Paper_Num: dataItem.Paper_Num,
                   Quoted_Num: dataItem.Quoted_Num,
                   RealName: dataItem.RealName,
-                  uesrID: dataItem.userID,
+                  userID: dataItem.userID,
                 }
               )
             }
@@ -323,6 +321,7 @@ class SearchResult extends React.Component {
   toExpert(id) {
     var newstate = this.state;
     newstate.id = id;
+    console.log('to expert '+id);
     this.props.history.push({ pathname: '/expertDetail', state: newstate });
   }
   onacSearch = (val, ty) => {
