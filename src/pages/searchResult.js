@@ -264,7 +264,10 @@ class ResultShow extends React.Component {
                       <div style={{ textAlign: "left" }}>
                         <div style={{ float: "left" }}>
                           <p >{item.OrganizationName}</p>
-                          <p style={{ whiteSpace: "pre-wrap" }}>发表文章：{item.Paper_Num}     被引次数：{item.Quoted_Num}</p>
+                          <p style={{ whiteSpace: "pre-wrap" }}>发表文章：{item.Paper_Num}     被引次数：{item.Quote_Num}</p>
+                          <p>
+                            
+                          </p>
                           <p>研究领域：{item.Area}</p>
                         </div>
                         <div style={{ float: "right" }}>
@@ -358,7 +361,7 @@ class SearchResult extends React.Component {
                   Area: dataItem.Area,
                   OrganizationName: dataItem.OrganizationName,
                   Paper_Num: dataItem.Paper_Num,
-                  Quoted_Num: dataItem.Quoted_Num,
+                  Quote_Num: dataItem.Quote_Num,
                   RealName: dataItem.RealName,
                   userID: dataItem.userID,
                 }

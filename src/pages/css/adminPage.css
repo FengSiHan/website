@@ -19,3 +19,28 @@
     height:100px;
     text-align: center;
 }
+
+
+.ap-project-detail-div
+{
+    width: 80%;
+    margin: 0% 10% 0% 10%;
+}
+.ap-project-detail-left-span
+{
+    width: 60px;
+    margin: 0 10px 0 0;
+    text-align: left;
+    float: left;
+}
+.ap-project-detail-right-span
+{
+    width: 80%;
+    text-align: left;
+    float: right;
+}
+.ap-project-divider
+{
+    margin: 5px 0 5px 0;
+    height: 1px;
+}

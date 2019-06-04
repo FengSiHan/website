@@ -302,7 +302,6 @@ class ExpertPage extends React.Component {
   }
 
   getData(id) {
-    var listData = [];
     var formData = new FormData();
     formData.append("userID", id);
     var objData = {};
@@ -370,7 +369,6 @@ class ExpertPage extends React.Component {
         else {
           this.setState({data:[]});
         }
-        this.setState({ data: listData });
         console.log('this.state.done');
         this.setState({ done: true });
       })
