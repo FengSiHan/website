@@ -111,11 +111,11 @@ class ExpertPage extends React.Component {
     this.state.allThesisData=[];  //全部论文信息
     this.state.thesisData={};   //单个论文详细信息
     this.state.protentData=[];
-    this.state.protentVal=0;
+    this.state.protentVal=0;    //展示论文还是项目
     this.state.expanization=0;    //合作专家或机构
     this.state.patentData=[];
     this.state.projectData=[];    //全部项目信息
-    this.state.patent={};
+    this.state.patent={};         //单个专利信息
     this.state.project={};        //单个项目信息
 
     this.state.cooperationType=0;
@@ -158,18 +158,20 @@ class ExpertPage extends React.Component {
         console.log('??');
         console.log(data.data);
         if (data.data.length >= 1) {
-          let dataItem=data.data[0]
+          let dataItem=data.data[0];
+          var author=dataItem.Author.replace(/\|/g,',');
+          var keyword=dataItem.Keyword.replace(/\|/g,',');
           this.setState(
             {
               thesisData: {
                 abstract: dataItem.Abstract, 
                 etitle: dataItem.ETitle,
-                author: dataItem.Author,
+                author: author,
                 year: dataItem.Year,
                 publication: dataItem.Publication,
                 epublication: dataItem.EPublication,
                 source: dataItem.Source,
-                keyword: dataItem.Keyword,
+                keyword: keyword,
                 ekeyword:dataItem.Ekeyword,
               },
               thesisVisible: true
@@ -188,7 +190,11 @@ class ExpertPage extends React.Component {
   }
   componentDidMount() {
     console.log('dsfaaaaaaaaaa');
-    if (this.state.done===false) this.getData(this.state.id);
+    if (this.state.done===false) 
+    {
+      this.getData(this.state.id);
+   //  this.setState({protentVal:})
+    }
     console.log(this.state.done);
   }
   handleTypeChange= e=>{
@@ -201,9 +207,6 @@ class ExpertPage extends React.Component {
   
   handleCoTypeChange= e=>{
     var val=e.target.value;
-    if(val===0) 
-      this.setState({cooperationType:val});
-    else 
     this.setState({cooperationType:val});
   }
 
@@ -212,7 +215,7 @@ class ExpertPage extends React.Component {
     if (this.state.protentVal===0)
     {
       var formData = new FormData();
-      formData.append("PaperID", id);
+      formData.append("projID", id);
       var objData = {};
       formData.forEach((value, key) => objData[key] = value);
       console.log(JSON.stringify(objData));
@@ -230,18 +233,18 @@ class ExpertPage extends React.Component {
             let dataItem=data.data[0]
             this.setState(
               {
-                thesisData: {
-                  abstract: dataItem.Abstract, 
-                  etitle: dataItem.ETitle,
-                  author: dataItem.Author,
-                  year: dataItem.Year,
-                  publication: dataItem.Publication,
-                  epublication: dataItem.EPublication,
-                  source: dataItem.Source,
+                project:
+                {
+                  id:dataItem.ProjectID,
+                  title:dataItem.Title,
+                  leader: dataItem.Leader, 
+                  year:dataItem.Time, 
+                  org: dataItem.Org, 
                   keyword: dataItem.Keyword,
-                  ekeyword:dataItem.Ekeyword,
-                },
-                thesisVisible: true
+                  ekeyword: dataItem.KeywordEn,
+                  abstract: dataItem.Abstract,
+                  
+                }
               }
             )
             
@@ -257,7 +260,43 @@ class ExpertPage extends React.Component {
     }
     else
     {
-      this.setState({patentVisible:true,patent:this.state.patentData[id]})
+      var formData = new FormData();
+      formData.append("PatentID", id);
+      var objData = {};
+      formData.forEach((value, key) => objData[key] = value);
+      console.log(JSON.stringify(objData));
+      console.log('sdf');
+      fetch('https://acphp.madao.bid/show_patent.php', {
+        method: 'POST',
+        body: formData,
+        dataType: 'text'
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('??');
+          console.log(data.data);
+          if (data.data.length >= 1) {
+            let dataItem=data.data[0]
+            this.setState(
+              {
+                patent:
+                {
+                  intro:dataItem.Intro,
+                  no:dataItem.PatentID,
+                  org:dataItem.Org,
+                  year:dataItem.Year
+                }
+              }
+            )
+            
+          }
+          else {
+          }
+        })
+        .catch(function (err) {
+          message.info('查询失败：' + err);
+        })
+      this.setState({patentVisible:true,patent:this.state.patent})
     }
      
   }
@@ -308,9 +347,19 @@ class ExpertPage extends React.Component {
               }
             )
           }
-          this.setState({projectData:prodata});
-          let data4=data.data4;     //个人介绍部分？专利信息
-
+          this.setState({projectData:prodata,protentData:prodata});
+          let data4=data.data4;     //专利信息
+          var padata=[];
+          for (let i=0;i<data4.length;i++)
+          {
+            padata.push(
+              {
+                id:data4[i].PatentID,
+                title:data4[i].PatentName,
+              }
+            )
+          }
+          this.setState({patentData:padata});
           let data5=data.data5;   //合作专家
           this.setState({expertData:data5});
 
@@ -332,46 +381,6 @@ class ExpertPage extends React.Component {
   }
 
   render() {
-    const listData=[];
-    const patent=[];
-    const project=[];
-    const expert=[];
-    const orginazation=[];
-    var edata=[];
-    for (let i=0;i<25;i++)
-    {
-      
-        
-        project.push(
-          {
-            id:i,
-            title:'项目sfasfdasf'+i,
-            leader: 'sss1998'+i, 
-            year:'2015年'+i, 
-            type:'重点项目',
-            org: '清华大学', 
-            keyword: '细菌抗酸性系统; 反向转运蛋白; 结构生物学;',
-            ekeyword: 'bacterial acid resistance (AR) systems; antiporter; structural biology; ;',
-            abstract: '肠道微生物通过口服进入消化道，经过胃时要处于PH值1.5-2的极酸环境，氢离子大量进入细菌，威胁其生存。为了适应这种极端环境，保持细胞内正常的PH值，肠道微生物进化出了一系列的抗酸系统。这些抗酸系统通常是通过膜反向转运蛋白，交换细胞内外质子化程度不同的底物来消耗细胞内的氢离子，从而维持细胞内正常PH值。我们已经得到了大肠杆菌抗酸系统中重要膜转运蛋白AdiC不同构象的高分辨率三维结构，通过比较分析这些结构，我们对细菌抗酸性的分子机制有了初步的了解，但还有一系列的基本问题有待回答。我们计划在已有的生化和结构分析的基础上，针对上述问题，综合多种研究手段探索肠道微生物适应强酸性极端环境的分子机制，并期望在此基础上设计特异性抑制肠道病原微生物的小分子。',
-            source: '	nsfc'
-          }
-        );
-        patent.push(
-        {
-          id:i,
-          title: '分离的多肽及其应用', 
-          year:'2015年',
-          org: '清华大学', 
-          no: 'CN103319574A',
-          intro: '本发明涉及分离的多肽及其应用。多肽包含：多个重复氨基酸序列，重复氨基酸序列为：LTPDQVVAIASX1X2GGKQALETVQRLLPVLCQAHG，其中，X1为H或N，X2为选自I、L、M、W、C、T、P、H、S、N、E、Q、H、K和R的之一。该多肽能够特异性地识别碱基。'
-        }
-        );
-       
-    }
-
-    
-
-    this.state.patentData=patent;
     //this.setState({expertdata:edata,thesisdata:listData});
    // message.info(edata.name);
     console.log(this.state.loginInfo);
@@ -405,7 +414,7 @@ class ExpertPage extends React.Component {
             <div className='ep-intro' >
               <h2>个人简介：</h2>
               <p>
-                {edata.introduction}
+                {this.state.eData.Introduce}
               </p>
             </div>
           </div>
@@ -432,7 +441,8 @@ class ExpertPage extends React.Component {
                             title={<a><p style={{textAlign:"left"}} onClick={() => this.thesisShow(item.id)}>{item.title}</p></a>/*<link to={'/detail'+item.id}>{item.name}</link>*/}
                             description={
                               <div style={{textAlign:"left" }}>
-                                  {item.time} - {item.author} - {item.source} - 被引量: {item.citation}  
+                                <p>{item.time} - {item.author} - 被引量: {item.citation}  </p> 
+                                   <p>来源： {item.source} </p>
                                  </div>
                           }
                           />

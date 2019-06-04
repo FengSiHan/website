@@ -7,6 +7,61 @@ import AcFooter from '../controls/acFooter'
 import AcThesisDetail from '../controls/acThesisDetail'
 import './css/searchResult.css'
 
+
+function ExpertItem(props)
+{
+  if(props.id.length>0)
+  {
+    return(
+      <span>
+        {props.comma}<a onClick={()=>props.toExpert(props.id)}>{props.name}</a>
+      </span>
+    )
+    
+  }
+  else{
+    return props.comma+props.name;
+  }
+}
+
+class Showexpert extends React.Component
+{
+  constructor(props)
+  {
+    super(props);
+    this.state={experts:[]}
+    for (var i=0;i<props.names.length;i++)
+    {
+      var comma=',';
+      if (i===0) comma='';
+      this.state.experts.push(
+        {
+          name:props.names[i],
+          id:props.ids[i],
+          comma:comma
+        }
+      )
+
+    }
+  }
+  render()
+  {
+    console.log(this.props.names)
+    return(
+        <div>
+          {
+            this.state.experts.map((expert)=>  (
+              <span style={{whiteSpace:"pre-wrap"}}>
+                <ExpertItem name={expert.name} id={expert.id} toExpert={this.props.toExpert} comma={expert.comma}/> 
+              </span>
+            ))
+          }
+        </div>
+    )
+  }
+
+}
+
 class ResultShow extends React.Component {
   constructor(props) {
     super(props);
@@ -41,18 +96,20 @@ class ResultShow extends React.Component {
         console.log('??');
         console.log(data.data);
         if (data.data.length >= 1) {
-          let dataItem=data.data[0]
+          let dataItem=data.data[0];
+          var author=dataItem.Author.replace(/\|/g,',');
+          var keyword=dataItem.Keyword.replace(/\|/g,',');
           this.setState(
             {
               thesisData: {
                 abstract: dataItem.Abstract, 
                 etitle: dataItem.ETitle,
-                author: dataItem.Author,
+                author: author,
                 year: dataItem.Year,
                 publication: dataItem.Publication,
                 epublication: dataItem.EPublication,
                 source: dataItem.Source,
-                keyword: dataItem.Keyword,
+                keyword: keyword,
                 ekeyword:dataItem.Ekeyword,
               },
               thesisVisible: true
@@ -93,7 +150,10 @@ class ResultShow extends React.Component {
           },
           {
             title: '作者',
-            dataIndex: 'RealName',
+            render:(text,record)=>
+            (
+              <Showexpert names={record.ExpertNames} ids={record.ExpertIDs} toExpert={this.props.toExpert}/>
+            )
           },
           {
             title: '来源',
@@ -276,7 +336,8 @@ class SearchResult extends React.Component {
               listData.push(
                 {
                   Title: dataItem.Title,
-                  RealName: dataItem.RealName,
+                  ExpertIDs:dataItem.ExpertIDs,
+                  ExpertNames:dataItem.ExpertNames,
                   Source: dataItem.Source,
                   Year: dataItem.Year,
                   Area: dataItem.Area,
