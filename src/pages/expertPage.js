@@ -38,11 +38,11 @@ function Cooperation(props)
                 avatar={<Avatar icon="user" size={64}/>}
                 // eslint-disable-next-line
                 title={ 
-                  <a><p style={{textAlign:"left"} } onClick={()=>changeExpert(item.id)}>{item.name}</p></a>
+                  <p style={{textAlign:"left"} } >{item.RealName}</p>     //
                 }
                 description={
                   <div style={{textAlign:"left" }}>
-                      {item.org}  
+                      {item.OrganizationName}  
                     </div>
               }
               />
@@ -58,7 +58,7 @@ function Cooperation(props)
         itemLayout="vertical"
         size="small"
         pagination={{pageSize:5}}
-        dataSource={newstate.orginazationData}
+        dataSource={newstate.organizationData}
         renderItem=
         {
             item =>
@@ -68,7 +68,7 @@ function Cooperation(props)
               >
               <List.Item.Meta
                 // eslint-disable-next-line
-                title={<p style={{textAlign:"left"}} >{item.name}</p>}
+                title={<p style={{textAlign:"left"}} >{item.OrganizationName}</p>}
               />
             </List.Item>
             )
@@ -108,17 +108,19 @@ class ExpertPage extends React.Component {
     this.state.projectVisible=false;
 
     this.state.eData={};    //专家信息
+    this.state.allThesisData=[];  //全部论文信息
+    this.state.thesisData={};   //单个论文详细信息
     this.state.protentData=[];
     this.state.protentVal=0;
-    this.state.expanization=0;
+    this.state.expanization=0;    //合作专家或机构
     this.state.patentData=[];
-    this.state.projectData=[];
+    this.state.projectData=[];    //全部项目信息
     this.state.patent={};
-    this.state.project={};
+    this.state.project={};        //单个项目信息
 
     this.state.cooperationType=0;
-    this.state.expertData=[];
-    this.state.orginazationData=[];
+    this.state.expertData=[];     //合作专家全部数据
+    this.state.organizationData=[];   //  合作机构全部数据
 
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -208,9 +210,56 @@ class ExpertPage extends React.Component {
   protentShow(id)
   {
     if (this.state.protentVal===0)
-      this.setState({projectVisible:true,project:this.state.projectData[id]})
+    {
+      var formData = new FormData();
+      formData.append("PaperID", id);
+      var objData = {};
+      formData.forEach((value, key) => objData[key] = value);
+      console.log(JSON.stringify(objData));
+      console.log('sdf');
+      fetch('http://94.191.58.148/show_project.php', {
+        method: 'POST',
+        body: formData,
+        dataType: 'text'
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('??');
+          console.log(data.data);
+          if (data.data.length >= 1) {
+            let dataItem=data.data[0]
+            this.setState(
+              {
+                thesisData: {
+                  abstract: dataItem.Abstract, 
+                  etitle: dataItem.ETitle,
+                  author: dataItem.Author,
+                  year: dataItem.Year,
+                  publication: dataItem.Publication,
+                  epublication: dataItem.EPublication,
+                  source: dataItem.Source,
+                  keyword: dataItem.Keyword,
+                  ekeyword:dataItem.Ekeyword,
+                },
+                thesisVisible: true
+              }
+            )
+            
+          }
+          else {
+          }
+        })
+        .catch(function (err) {
+          message.info('查询失败：' + err);
+        })
+      this.setState({projectVisible:true,project:this.state.project})
+
+    }
     else
-     this.setState({patentVisible:true,patent:this.state.patentData[id]})
+    {
+      this.setState({patentVisible:true,patent:this.state.patentData[id]})
+    }
+     
   }
 
   getData(id) {
@@ -230,9 +279,44 @@ class ExpertPage extends React.Component {
       .then((data) => {
         console.log(data);
         if (data!=undefined) {
-          let data1=data.data1;
+          let data1=data.data1;   //专家信息
           this.setState({eData:data1[0]});
+          let data2=data.data2;   //论文信息
+          var tdata=[];
+          for (let i=0;i<data2.length;i++)
+          {
+            tdata.push(
+              {
+                id:data2[i].PaperID,
+                title:data2[i].Title,
+                author:data2[i].RealName,
+                source:data2[i].Source,
+                time:data2[i].Year,
+                citation:data2[i].Quoted_Num
+              }
+            )
+          }
+          this.setState({allThesisData:tdata});
+          let data3=data.data3;     //项目信息
+          var prodata=[];
+          for (let i=0;i<data3.length;i++)
+          {
+            prodata.push(
+              {
+                id:data3[i].ProjectID,
+                title:data3[i].Title,
+              }
+            )
+          }
+          this.setState({projectData:prodata});
+          let data4=data.data4;     //个人介绍部分？专利信息
 
+          let data5=data.data5;   //合作专家
+          this.setState({expertData:data5});
+
+          let data6=data.data6;   //合作机构
+          console.log(data6);
+          this.setState({organizationData:data6});
         }
         else {
           this.setState({data:[]});
@@ -253,21 +337,11 @@ class ExpertPage extends React.Component {
     const project=[];
     const expert=[];
     const orginazation=[];
+    var edata=[];
     for (let i=0;i<25;i++)
     {
-        listData.push(
-            {
-                id:i,
-                title:'title',
-                author:'laiyuan',
-                source:"kkkkk",
-                time:"???",
-                citation:i*11,
-                download:i*5,
-                points:i+3,
-                field:'sfsdafasdf'
-            }
-        );
+      
+        
         project.push(
           {
             id:i,
@@ -292,36 +366,14 @@ class ExpertPage extends React.Component {
           intro: '本发明涉及分离的多肽及其应用。多肽包含：多个重复氨基酸序列，重复氨基酸序列为：LTPDQVVAIASX1X2GGKQALETVQRLLPVLCQAHG，其中，X1为H或N，X2为选自I、L、M、W、C、T、P、H、S、N、E、Q、H、K和R的之一。该多肽能够特异性地识别碱基。'
         }
         );
-        expert.push(
-          {
-              id:i+50,
-              name:i+50,
-              org:'kjqsbsbsblaiyuan',
-          }
-        );
-        orginazation.push(
-          {
-            name:i+100
-          }
-        )
+       
     }
 
-    var edata={
-        id:this.state.id,
-        name:'expertname'+this.state.id,
-        org:'orginazation',
-        papernum:5,
-        citation:11,
-        field:'field',
-        introduction:"balablablablalballbsdfaaaaaaaaaaad的三三大夫阿斯发达范德萨法第四法斯蒂芬地方的三剑客佛教卡萨拉丁教父考虑角色打开了佛教克里斯大夫将阿斯打开了解放的卡拉萨解放克拉斯的的开发佛教典籍科技卡三 的萨菲卡桑德拉将风口浪尖的法思考了解放卡拉角色考虑缔结克拉夫加快了角色的快乐将风口浪尖克"
-    } 
+    
 
-    this.state.projectData=project;
     this.state.patentData=patent;
-    this.state.expertData=expert;
-    this.state.orginazationData=orginazation;
     //this.setState({expertdata:edata,thesisdata:listData});
-    message.info(edata.name);
+   // message.info(edata.name);
     console.log(this.state.loginInfo);
     return (
       <Layout className="ep-layout">
@@ -367,7 +419,7 @@ class ExpertPage extends React.Component {
                     itemLayout="vertical"
                     size="small"
                     pagination={{pageSize:5}}
-                    dataSource={listData}
+                    dataSource={this.state.allThesisData}
                     renderItem=
                     {
                         item =>

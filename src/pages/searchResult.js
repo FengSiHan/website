@@ -199,7 +199,7 @@ class ResultShow extends React.Component {
                   <List.Item.Meta
                     avatar={<Avatar icon="user" size={64} />}
                     // eslint-disable-next-line
-                    title={<a><p style={{ textAlign: "left" }} onClick={() => this.props.toExpert(item.userID)}>{item.RealName+item.uesrID}</p></a>}
+                    title={<a><p style={{ textAlign: "left" }} onClick={() => this.props.toExpert(item.userID)}>{item.RealName}</p></a>}
                     description={
                       <div style={{ textAlign: "left" }}>
                         <div style={{ float: "left" }}>
@@ -257,7 +257,7 @@ class SearchResult extends React.Component {
     formData.append("name", value);
     var objData = {};
     formData.forEach((value, key) => objData[key] = value);
-    //console.log(JSON.stringify(objData));
+    console.log(JSON.stringify(objData));
 
     fetch('http://94.191.58.148/search.php', {
       method: 'POST',
