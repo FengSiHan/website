@@ -39,7 +39,7 @@ class LoginPageClass extends React.Component {
                 // eslint-disable-next-line
                 this.state.loginInfo.un = values['un'];
 
-                fetch('http://localhost/login.php', {
+                fetch('http://ac.madao.bid/login.php', {
                     method: 'POST',
                     body: formData,
                     dataType: 'text'
