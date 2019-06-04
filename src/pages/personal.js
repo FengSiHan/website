@@ -120,8 +120,8 @@ const ExpertApplyModal = Form.create({ name: 'expertApply' })(
             <Form.Item label="个人简介">
               {getFieldDecorator('intro')(<TextArea style={{ minHeight: '80px' }} />)}
             </Form.Item>
-            <Form.Item label="获得奖项">
-              {getFieldDecorator('award')(<TextArea style={{ minHeight: '80px' }} />)}
+            <Form.Item label="职称">
+              {getFieldDecorator('pos')(<TextArea style={{ minHeight: '80px' }} />)}
             </Form.Item>
             <Form.Item label="研究领域">
               {getFieldDecorator('filed', {
@@ -262,17 +262,20 @@ class PersonalPageClass extends React.Component {
         return;
       }
       var formData = new FormData();
-      formData.append("uid", this.state.loginInfo.UID);
+      formData.append("UID", this.state.loginInfo.UID);
       formData.append("un", this.state.loginInfo.un);
-      formData.append("idCard", values['idCard']);
-      formData.append("org", values['org']);
-      formData.append("realName", values['realName']);
-      formData.append("intro", values['intro']);
-      formData.append("field", values['field']);
-      formData.append("award", values['award']);
+      formData.append("IDNum", values['idCard']);
+      formData.append("organization", values['org']);
+      formData.append("RealName", values['realName']);
+      formData.append("Introduce", values['intro']);
+      formData.append("Area", values['field']);
+      formData.append("Career", values['pos']);
 
 
 
+      var objData = {};
+      formData.forEach((value, key) => objData[key] = value);
+      console.log(JSON.stringify(objData));
 
       fetch('https://acphp.madao.bid/expert_apply.php', {
         method: 'POST',
@@ -282,7 +285,7 @@ class PersonalPageClass extends React.Component {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          if (data.status === true) {
+          if (data.result === true) {
             message.info('申请中，请等待管理员验证');
             form.resetFields();
             this.setState({ expertApplyVisible: false });

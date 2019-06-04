@@ -112,10 +112,7 @@ class PatentPage extends React.Component {
       formData.append("PatentID", values['no']);
       formData.append("UID", this.state.loginInfo.UID);
 
-      var objData = {};
-      formData.forEach((value, key) => objData[key] = value);
-      console.log(JSON.stringify(objData));
-      fetch('https://acphp.madao.bid/add_patent.php', {
+      fetch('https://acphp.madao.bid/patent_apply.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'

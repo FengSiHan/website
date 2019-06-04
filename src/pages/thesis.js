@@ -135,18 +135,17 @@ class ThesisPage extends React.Component {
       var formData = new FormData();
       formData.append("Title", values['title']);
       formData.append("ETitle", values['etitle']);
-      formData.append("Year", values['year']);
       formData.append("Keyword", values['keyword']);
       formData.append("EKeyword", values['ekeyword']);
       formData.append("Publication", values['publication']);
       formData.append("EPublication", values['epublication']);
       formData.append("Abstract", values['abstract']);
       formData.append("UID", this.state.loginInfo.UID);
-
+      
       var objData = {};
       formData.forEach((value, key) => objData[key] = value);
       console.log(JSON.stringify(objData));
-      fetch('https://acphp.madao.bid/add_paper.php', {
+      fetch('https://acphp.madao.bid/paper_apply.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'
@@ -155,7 +154,6 @@ class ThesisPage extends React.Component {
         .then((data) => {
           console.log(data);
           if (data.res === 1) {
-            console.log(data);
             message.info('申请中，请等待管理员验证');
             form.resetFields();
             this.setState({ projCreateVisible: false });
