@@ -164,14 +164,14 @@ class ProjectPage extends React.Component {
       var objData = {};
       formData.forEach((value, key) => objData[key] = value);
       console.log(JSON.stringify(objData));
-      fetch('https://acphp.madao.bid/add_project.php', {
+      fetch('https://acphp.madao.bid/project_apply.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.res === true) {
+          if (data.res === 1) {
             console.log(data);
             message.info('申请中，请等待管理员验证');
             form.resetFields();
