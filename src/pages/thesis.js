@@ -99,7 +99,7 @@ class ThesisPage extends React.Component {
     var formData = new FormData();
     formData.append("un", this.state.loginInfo.un);
     formData.append("UID", this.state.loginInfo.UID);
-    fetch('http://94.191.58.148/get_paper.php', {
+    fetch('https://acphp.madao.bid/get_paper.php', {
       method: 'POST',
       body: formData,
       dataType: 'text'
@@ -146,7 +146,7 @@ class ThesisPage extends React.Component {
       var objData = {};
       formData.forEach((value, key) => objData[key] = value);
       console.log(JSON.stringify(objData));
-      fetch('http://94.191.58.148/add_paper.php', {
+      fetch('https://acphp.madao.bid/add_paper.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'
@@ -221,7 +221,7 @@ class ThesisPage extends React.Component {
                     }}
                     // var formData = new FormData();
                     // formData.append("paperID", this.state.data[item.id].PaperID);
-                    // fetch('http://94.191.58.148/show_paper.php', {
+                    // fetch('https://acphp.madao.bid/show_paper.php', {
                     //   method: 'POST',
                     //   body: formData,
                     //   dataType: 'text'

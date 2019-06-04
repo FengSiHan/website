@@ -28,7 +28,7 @@ class HomePage extends React.Component
         var json=[];
         var row = {key:'2', secret_key: '3', telephone: 'yes'};
         json.push(row);
-        fetch('http://94.191.58.148/test.php',{
+        fetch('https://acphp.madao.bid/test.php',{
             method: 'POST',
             body: row,
             dataType: "text"

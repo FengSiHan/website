@@ -47,7 +47,7 @@ class RegisterPageClass extends React.Component {
 
         // eslint-disable-next-line
         this.state.loginInfo.un = values['un'];
-        fetch('http://94.191.58.148/register.php', {
+        fetch('https://acphp.madao.bid/register.php', {
           method: 'POST',
           body: formData,
           dataType: 'text'

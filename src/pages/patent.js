@@ -72,7 +72,7 @@ class PatentPage extends React.Component {
     var formData = new FormData();
     formData.append("un", this.state.loginInfo.un);
     formData.append("UID", this.state.loginInfo.UID);
-    fetch('http://94.191.58.148/get_patent.php', {
+    fetch('https://acphp.madao.bid/get_patent.php', {
       method: 'POST',
       body: formData,
       dataType: 'text'
@@ -115,7 +115,7 @@ class PatentPage extends React.Component {
       var objData = {};
       formData.forEach((value, key) => objData[key] = value);
       console.log(JSON.stringify(objData));
-      fetch('http://94.191.58.148/add_patent.php', {
+      fetch('https://acphp.madao.bid/add_patent.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'
@@ -180,7 +180,7 @@ class PatentPage extends React.Component {
                       this.setState({ detailVisible: true });
                       // var formData = new FormData();
                       // formData.append("patentID", this.state.data[item.id].PatentID);
-                      // fetch('http://94.191.58.148/show_patent.php', {
+                      // fetch('https://acphp.madao.bid/show_patent.php', {
                       //   method: 'POST',
                       //   body: formData,
                       //   dataType: 'text'

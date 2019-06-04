@@ -31,7 +31,7 @@ class ResultShow extends React.Component {
     formData.forEach((value, key) => objData[key] = value);
     console.log(JSON.stringify(objData));
     console.log('sdf');
-    fetch('http://94.191.58.148/show_paper.php', {
+    fetch('https://acphp.madao.bid/show_paper.php', {
       method: 'POST',
       body: formData,
       dataType: 'text'
@@ -259,7 +259,7 @@ class SearchResult extends React.Component {
     formData.forEach((value, key) => objData[key] = value);
     console.log(JSON.stringify(objData));
 
-    fetch('http://94.191.58.148/search.php', {
+    fetch('https://acphp.madao.bid/search.php', {
       method: 'POST',
       body: formData,
       dataType: 'text'

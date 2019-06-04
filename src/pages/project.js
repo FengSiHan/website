@@ -87,7 +87,7 @@ class ProjectPage extends React.Component {
     var formData = new FormData();
     formData.append("un", this.state.loginInfo.un);
     formData.append("UID", this.state.loginInfo.UID);
-    fetch('http://94.191.58.148/get_project.php', {
+    fetch('https://acphp.madao.bid/get_project.php', {
       method: 'POST',
       body: formData,
       dataType: 'text'
@@ -164,7 +164,7 @@ class ProjectPage extends React.Component {
       var objData = {};
       formData.forEach((value, key) => objData[key] = value);
       console.log(JSON.stringify(objData));
-      fetch('http://94.191.58.148/add_project.php', {
+      fetch('https://acphp.madao.bid/add_project.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'
@@ -221,7 +221,7 @@ class ProjectPage extends React.Component {
                     <Button onClick={() => {
                       var formData = new FormData();
                       formData.append("projID", this.state.data[item.id].ProjectID);
-                      fetch('http://94.191.58.148/show_project.php', {
+                      fetch('https://acphp.madao.bid/show_project.php', {
                         method: 'POST',
                         body: formData,
                         dataType: 'text'

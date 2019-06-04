@@ -176,7 +176,7 @@ class PersonalPageClass extends React.Component {
     var objData = {};
     formData.forEach((value, key) => objData[key] = value);
     console.log(JSON.stringify(objData));
-    fetch('http://94.191.58.148/getInfor.php', {
+    fetch('https://acphp.madao.bid/getInfor.php', {
       method: 'POST',
       body: formData,
       dataType: 'text'
@@ -213,7 +213,7 @@ class PersonalPageClass extends React.Component {
       formData.append("intro", values['intro']);
       formData.append("phone", values['phone']);
 
-      fetch('http://94.191.58.148/changeInfor.php', {
+      fetch('https://acphp.madao.bid/changeInfor.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'
@@ -274,7 +274,7 @@ class PersonalPageClass extends React.Component {
 
 
 
-      fetch('http://94.191.58.148/expert_apply.php', {
+      fetch('https://acphp.madao.bid/expert_apply.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'
@@ -312,7 +312,7 @@ class PersonalPageClass extends React.Component {
       formData.append('pd', values['oldpd']);
       formData.append("npd", values['newpd']);
 
-      fetch('http://94.191.58.148/changePassword.php', {
+      fetch('https://acphp.madao.bid/changePassword.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'

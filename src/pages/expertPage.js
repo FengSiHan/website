@@ -148,7 +148,7 @@ class ExpertPage extends React.Component {
     formData.forEach((value, key) => objData[key] = value);
     console.log(JSON.stringify(objData));
     console.log('sdf');
-    fetch('http://94.191.58.148/show_paper.php', {
+    fetch('https://acphp.madao.bid/show_paper.php', {
       method: 'POST',
       body: formData,
       dataType: 'text'
@@ -217,7 +217,7 @@ class ExpertPage extends React.Component {
       formData.forEach((value, key) => objData[key] = value);
       console.log(JSON.stringify(objData));
       console.log('sdf');
-      fetch('http://94.191.58.148/show_project.php', {
+      fetch('https://acphp.madao.bid/show_project.php', {
         method: 'POST',
         body: formData,
         dataType: 'text'
@@ -270,7 +270,7 @@ class ExpertPage extends React.Component {
     formData.forEach((value, key) => objData[key] = value);
     console.log(JSON.stringify(objData));
 
-    fetch('http://94.191.58.148/show_expert.php', {
+    fetch('https://acphp.madao.bid/show_expert.php', {
       method: 'POST',
       body: formData,
       dataType: 'text'
