@@ -461,12 +461,12 @@ class PersonalPageClass extends React.Component {
               </Button>
             </div>
             <div style={{ margin: '20px' }}>
-              <Button type="primary" onClick={() => this.props.history.push({ pathname: '/kejin', state: this.state })}>
+              <Button type="primary" disabled onClick={() => this.props.history.push({ pathname: '/kejin', state: this.state })}>
                 积分充值
               </Button>
             </div>
             <div style={{ margin: '20px' }}>
-              <Button type="primary" disabled={!this.state.loginInfo.isExpert} onClick={() => this.props.history.push({ pathname: '/withdraw', state: this.state })}>
+              <Button type="primary" disabled/*={!this.state.loginInfo.isExpert}*/ onClick={() => this.props.history.push({ pathname: '/withdraw', state: this.state })}>
                 积分提现
               </Button>
             </div>
