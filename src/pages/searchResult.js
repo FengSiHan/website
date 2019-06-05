@@ -243,7 +243,7 @@ class ResultShow extends React.Component {
           grid=
           {
             {
-              gutter: 200,
+              gutter: 50,
               column: 2
             }
           }
@@ -264,16 +264,13 @@ class ResultShow extends React.Component {
                     // eslint-disable-next-line
                     title={<a><p style={{ textAlign: "left" }} onClick={() => this.props.toExpert(item.userID)}>{item.RealName}</p></a>}
                     description={
-                      <div style={{ textAlign: "left" }}>
-                        <div style={{ float: "left" }}>
+                      <div style={{textAlign:'left'}}>
+                        <div style={{ float: "left",width:'70%' }}>
                           <p >{item.OrganizationName}</p>
                           <p style={{ whiteSpace: "pre-wrap" }}>发表文章：{item.Paper_Num}     被引次数：{item.Quote_Num}</p>
-                          <p>
-                            
-                          </p>
-                          <p>研究领域：{item.Area}</p>
+                          <p className='sr-description'>研究领域：{item.Area}</p>
                         </div>
-                        <div style={{ float: "right" }}>
+                        <div style={{ float: "right",width:'30%' }}>
                           <Button type="default" onClick={() => this.props.toExpert(item.userID)}>详细信息</Button>
                         </div>
                       </div>

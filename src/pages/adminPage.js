@@ -83,6 +83,10 @@ class AdminPage extends React.Component {
     {
         this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
+    if (this.state.loginInfo.isAdmin !=1) {
+      window.location.href = "/";
+      //this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
+    }
     this.state.visible=false;
     this.state.modaldata={};  //给不通过弹窗的数据
     this.state.done=false;

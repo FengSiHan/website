@@ -93,6 +93,12 @@ class ExpertPage extends React.Component {
     {
         this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
     }
+      console.log(this.state.loginInfo.isAdmin )
+    if (this.state.loginInfo.isAdmin !=1) {
+      console.log('adminPage')
+      window.location.href = "/";
+      //this.state = {loginInfo: {isExpert: false, logined: false, un:''}};
+    }
     this.state.expertdata={};
     this.state.thesisData={title: '', etitle:'',
     author: '', year:'',

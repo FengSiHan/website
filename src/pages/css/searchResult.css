@@ -1,6 +1,6 @@
 .sr-layout
 {
-    min-height: 900px;
+    min-height: 700px;
     height:100%;
     width: 100%;
     background: #fff;
@@ -19,6 +19,12 @@
     padding: 8% 4% 0% 4%;
     text-align: center;
    
+}
+.sr-description
+{
+    min-height: 40px;
+    max-height: 50px;
+    text-align: left;
 }
 .project-detail-div
 {

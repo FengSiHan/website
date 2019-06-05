@@ -46,6 +46,7 @@ class LoginPageClass extends React.Component {
                 })
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log(data);
                     if (data.data.length === 1) {
                         message.info('登录成功');
                         // eslint-disable-next-line
@@ -56,7 +57,10 @@ class LoginPageClass extends React.Component {
                         this.state.loginInfo.point = data.data[0].Points;
                         // eslint-disable-next-line
                         this.state.loginInfo.logined = true;
-                        this.props.history.push({ pathname: this.state.lastUrl, state: this.state });
+                        this.state.loginInfo.isAdmin = data.data[0].IsAdmin;
+                        console.log(this.state.loginInfo.isAdmin );
+                        if (this.state.loginInfo.isAdmin == '1') this.props.history.push({pathname:'/adminPage',state:this.state});
+                        else this.props.history.push({ pathname: '/'/*this.state.lastUrl*/, state: this.state });
                     }
                     else {
                         message.info('登录失败: ' + data.err);
