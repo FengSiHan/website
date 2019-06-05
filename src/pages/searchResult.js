@@ -99,6 +99,9 @@ class ResultShow extends React.Component {
           let dataItem=data.data[0];
           var author=dataItem.Author.replace(/\|/g,',');
           var keyword=dataItem.Keyword.replace(/\|/g,',');
+          var ekeyword=dataItem.Ekeyword;
+          if(ekeyword.lastIndexOf("||")>0 ) ekeyword=dataItem.Ekeyword.replace(/\|\|/g,',').replace(/\|/g,'');
+          else ekeyword=ekeyword.replace(/\|/g,',');
           this.setState(
             {
               thesisData: {
@@ -110,7 +113,7 @@ class ResultShow extends React.Component {
                 epublication: dataItem.EPublication,
                 source: dataItem.Source,
                 keyword: keyword,
-                ekeyword:dataItem.Ekeyword,
+                ekeyword:ekeyword,
               },
               thesisVisible: true
             }
