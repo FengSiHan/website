@@ -107,9 +107,9 @@ class LoginPageClass extends React.Component {
                                     valuePropName: 'checked',
                                     initialValue: true,
                                 })(<Checkbox className="login-form-checkbox">Remember me</Checkbox>)}
-                                <a className="login-form-forgot" href="/forgetpd">
+                                {/* <a className="login-form-forgot" href="/forgetpd">
                                     Forgot password
-                            </a>
+                            </a> */}
                                 <Button type="primary" htmlType="submit" className="login-form-button">
                                     Log in
                             </Button>
