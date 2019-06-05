@@ -163,7 +163,7 @@ class PatentPage extends React.Component {
                         //<Avatar src={logo} style={{height:'15px', width:'22px'}}/>
                         <Avatar /*src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" */ />
                       }
-                      title={<a href="https://ant.design">{item.PatentName}</a>}
+                      title={item.PatentName}
                       description={item.Intro}
                     /><Button onClick={() => {
                       let data1 = this.state.data[item.id];

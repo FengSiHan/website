@@ -141,7 +141,7 @@ class ThesisPage extends React.Component {
       formData.append("EPublication", values['epublication']);
       formData.append("Abstract", values['abstract']);
       formData.append("UID", this.state.loginInfo.UID);
-      
+
       var objData = {};
       formData.forEach((value, key) => objData[key] = value);
       console.log(JSON.stringify(objData));
@@ -196,7 +196,7 @@ class ThesisPage extends React.Component {
                         //<Avatar src={logo} style={{height:'15px', width:'22px'}}/>
                         <Avatar /*src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" */ />
                       }
-                      title={<a href="https://ant.design">{item.Title}</a>}
+                      title={item.Title}
                       description={item.Keyword}
                     />
                     <Button onClick={() => {
