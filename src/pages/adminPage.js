@@ -372,9 +372,10 @@ class AdminPage extends React.Component {
                 .then((response) => response.text())
                 .then((data) => {
                     console.log('post success')
-                    console.log(result);
-                    console.log(reasonForNo);
-                    console.log(id);
+                    console.log(data);
+                    // console.log(result);
+                    // console.log(reasonForNo);
+                    // console.log(id);
                 })
                 .catch(function (err) {
                     message.info('上传失败: ' + err);
