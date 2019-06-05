@@ -372,7 +372,6 @@ class AdminPage extends React.Component {
                 .then((response) => response.text())
                 .then((data) => {
                     console.log('post success')
-                    console.log(data);
                     // console.log(result);
                     // console.log(reasonForNo);
                     // console.log(id);
